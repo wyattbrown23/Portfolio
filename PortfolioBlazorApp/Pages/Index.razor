@@ -6,7 +6,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width" />
-    @*<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />*@
     <title>Create New Project</title>
 </head>
 <header>
@@ -16,7 +15,7 @@
 </header>
 <body>
     <h5 class="bg-primary text-white text-center m-2 p-2">Create a Project</h5>
-    <form class="m-2">
+    <div class="m-2">
         <div asp-validation-summary="All"></div>
         <div class="form-group">
             <label asp-for="Title">Project Title:</label>
@@ -37,8 +36,8 @@
         <div>
 
         </div>
-        <button @onclick="addProject" type="submit" class="btn btn-primary">Add Project</button>
-    </form>
+        <button @onclick="addProject" class="btn btn-primary">Add Project</button>
+    </div>
 </body>
 
 
@@ -75,7 +74,6 @@
         };
         try
         {
-            await RefreshProjectsAsync();
             var response = await http.PostAsJsonAsync("/api/project/", project);
         }
         catch(Exception e)
@@ -96,6 +94,23 @@
     protected override async Task OnInitializedAsync()
     {
         await RefreshProjectsAsync();
+
+        //var project = new Project
+        //{
+        //    Title = newProjectName,
+        //    Requirements = newProjectRequirements,
+        //    Design = newProjectDesign,
+        //    CompletionDate = newProjectCompletionDate
+        //};
+        //try
+        //{
+        //    await RefreshProjectsAsync();
+        //    var response = await http.PostAsJsonAsync("/api/project/", project);
+        //}
+        //catch (Exception e)
+        //{
+
+        //}
     }
 
     private async Task RefreshProjectsAsync()
