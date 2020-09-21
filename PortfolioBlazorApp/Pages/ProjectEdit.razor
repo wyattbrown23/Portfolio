@@ -1,0 +1,135 @@
+﻿@*@page "/projectedit"
+@page "/projectedit/{Id}"
+
+
+
+
+<section class="employee-edit">
+    @if (!Saved)
+    {
+
+        <div class="alert @StatusClass">@Message</div>
+
+        <h1 class="page-title">Details for @Project.Title</h1>
+
+
+        <EditForm Model="@Project" OnValidSubmit="@HandleValidSubmit">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group row">
+                <label for="title" class="col-sm-3">Title: </label>
+                <InputText id="title" @bind-Value="@Project.Title" class="form-control col-sm-8" placeholder="Enter title"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Project.Title)" />
+            </div>
+
+            <div class="form-group row">
+                <label for="requirement" class="col-sm-3">Requirement: </label>
+                <InputText id="requirement" class="form-control col-sm-8" @bind-Value="@Project.Requirement" placeholder="Enter requirement"></InputText>
+                <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Project.Requirement)" />
+            </div>
+
+
+            <div class="form-group row">
+                <label for="design" class="col-sm-3">Design: </label>
+                <InputText id="design" class="form-control col-sm-8" @bind-Value="@Project.Design" placeholder="Enter design"></InputText>
+
+            </div>
+            <div class="form-group row">
+                <label for="completionDate" class="col-sm-3">Completion Date: </label>
+                <InputDate id="completionDate" class="form-control col-sm-8" @bind-Value="@Project.CompletionDate" placeholder="Enter completion date"></InputDate>
+
+            </div>
+           
+
+            <button type="submit" class="btn btn-primary edit-btn">Save project</button>
+
+            @if (Project.Id > 0)
+            {
+                <a class="btn btn-danger" @onclick="@DeleteEmployee">
+                    Delete
+                </a>
+            }
+
+        </EditForm>
+    }
+    else
+    {
+        <div class="alert @StatusClass">@Message</div>
+        <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
+
+    }
+</section>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+    <title>Create New Project</title>
+
+</head>
+<body>
+    <h5 class="bg-primary text-white text-center m-2 p-2">Create a Project</h5>
+    <form asp-action="CreateBlog" method="post" class="m-2">
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="Title">Project Title:</label>
+            <input asp-for="Title" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Body">Requirements: </label>
+            <textarea asp-for="Body" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Body">Design: </label>
+            <textarea asp-for="Body" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="date" />
+        </div>
+        <div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Create Project</button>
+    </form>
+</body>
+</html>*@

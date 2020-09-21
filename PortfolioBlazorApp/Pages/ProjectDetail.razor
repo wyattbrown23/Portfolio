@@ -1,0 +1,47 @@
+﻿@*@page "/projectdetail/{Id}"
+@inherits ProjectDetailBase
+
+
+<h1 class="page-title">Details for @Project.Title</h1>
+
+
+<div class="col-12 row">
+    <div class="col-2">
+    </div>
+    <div class="col-10 row">
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project ID</label>
+                <div class="col-sm-8">
+                    <label type="text" class="form-control-plaintext">@Project.Id</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Title</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@Project.Title</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Requirement</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@Project.Requirement</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Design</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@Project.Design</label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Completion Date</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@Project.CompletionDate.ToShortDateString()</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
