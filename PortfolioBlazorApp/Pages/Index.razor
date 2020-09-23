@@ -3,17 +3,8 @@
 @using Portfolio.Shared
 
 
-
-
-
-
-
-@*<head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Create New Project</title>
-    </head>*@
 <header>
-    <h1 class="page-title">My Personal  Projects</h1>
+    <h1 class="page-title">My Personal Projects</h1>
     <br />
 </header>
 <body>
@@ -45,13 +36,6 @@
 
 
 
-
-
-
-@*<button @onclick="loadProjects">Load Projects</button>*@
-
-
-
 <hr />
 <h3>List of Projects</h3>
 <ul>
@@ -59,7 +43,7 @@
     {
 <li>
     <a href="/ProjectDetails/@p.Id"> @p.Title</a>
-    @*<button @onclick="removeProject" class="btn btn-primary">Remove </button>*@
+    <button class="btn btn-primary">Remove </button>
 </li>
 }
 </ul>
@@ -76,12 +60,7 @@
     private DateTime newProjectCompletionDate;
 
 
-
-
-
     private IEnumerable<Project> projects = new List<Project>();
-
-
 
     private async Task addProject()
     {
@@ -113,14 +92,10 @@
         var response = await http.GetStringAsync("/api/project/");
     }
 
-
-
     protected override async Task OnInitializedAsync()
     {
         await RefreshProjectsAsync();
     }
-
-
 
     private async Task RefreshProjectsAsync()
     {
