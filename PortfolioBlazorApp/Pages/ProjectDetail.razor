@@ -4,9 +4,56 @@
 
 
 
-<h3>ProjectDetails @ProjectId</h3>
+<h1 class="page-title">Details for @projectName</h1>
+<div class="col-12 row">
+    <div class="col-2">
+    </div>
+    <div class="col-10 row">
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project ID</label>
+                <div class="col-sm-8">
+                    <label type="text" class="form-control-plaintext">@ProjectId</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Title</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@projectName</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Requirement</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@projectRequirements</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Project Design</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@projectDesign</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Completion Date</label>
+                <div class="col-sm-8">
+                    <label type="text" readonly class="form-control-plaintext">@projectCompletionDate.ToShortDateString()</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+
+
+
+
+
+
+
+
+<h4>Edit Project</h4>
 
 <div class="form-group">
     <label asp-for="Title">Project Title:</label>
@@ -24,7 +71,7 @@
     <label asp-for="Body">Completion Date: </label>
     <input @bind-value="projectCompletionDate" type="date" />
 </div>
-<button>save</button>
+<button @onclick="updateProject">save</button>
 
 
 
@@ -32,25 +79,17 @@
 @code { [Parameter]
     public int ProjectId { get; set; }
 
-
-
     private string projectName;
     private string projectRequirements;
     private string projectDesign;
     private DateTime projectCompletionDate;
 
 
-
-
     private Project projects = new Project();
-
-
 
     protected override async Task OnInitializedAsync()
     {
         var project = await http.GetFromJsonAsync<IEnumerable<Project>>($"api/project/projectdetails/{ProjectId}");
-
-
 
         projectName = project.First().Title;
         projectRequirements = project.First().Requirements;
@@ -64,6 +103,7 @@
     {
         var project = new Project
         {
+            Id = ProjectId,
             Title = projectName,
             Requirements = projectRequirements,
             Design = projectDesign,
@@ -71,7 +111,7 @@
         };
         try
         {
-            var response = await http.PostAsJsonAsync("/api/project/", project);
+            var response = await http.PostAsJsonAsync("/api/project/update", project);
         }
         catch (Exception e)
         {

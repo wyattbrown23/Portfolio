@@ -53,12 +53,10 @@ namespace Portfolio.API.Controllers
 
 
         [HttpPost("Update")]
-        public async void UpdateProjectDetails(Project project)
+        public async Task UpdateProjectDetails(Project project)
         {
             await repository.UpdateProjectDetailsAsync(project);
         }
-
-
 
     }
 }
