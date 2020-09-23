@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Api.Data;
+using Portfolio.API.Data;
 using Portfolio.Shared;
 
-namespace Portfolio.Api.Controllers
+
+
+namespace Portfolio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,13 +17,19 @@ namespace Portfolio.Api.Controllers
     {
         private readonly IRepository repository;
 
+
+
         public ProjectController(IRepository repository)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
+
+
         [HttpGet()]
         public async Task<IEnumerable<Project>> Get() => await repository.Projects.ToListAsync();
+
+
 
         [HttpPost]
         public async Task Post(Project project)
@@ -30,21 +37,28 @@ namespace Portfolio.Api.Controllers
             await repository.SaveProjectAsync(project);
         }
 
-        [HttpGet("[action]")]
-        public async Task DefaultData()
+
+
+        [HttpGet("projectdetails/{id}")]
+        public IQueryable<Project> GetProjectDetailsById(int id)
         {
-            await repository.SaveProjectAsync(new Project
-            {
-                Title = "Project 1",
-                Requirements = "Demonstrate APIs with a database"
-            });
-
-
-            await repository.SaveProjectAsync(new Project
-            {
-                Title = "Project 2",
-                Requirements = "No, seriously. Do that."
-            });
+            return repository.Projects.Where(b => b.Id == id);
         }
+        [HttpDelete]
+        public async void DeleteProject(Project project)
+        {
+            await repository.DeleteProjectAsync(project);
+        }
+
+
+
+        [HttpPost("Update")]
+        public async void UpdateProjectDetails(Project project)
+        {
+            await repository.UpdateProjectDetailsAsync(project);
+        }
+
+
+
     }
 }

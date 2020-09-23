@@ -1,47 +1,79 @@
-﻿@*@page "/projectdetail/{Id}"
-@inherits ProjectDetailBase
+﻿@page "/projectdetails/{ProjectId:int}"
+@inject HttpClient http
+@using Portfolio.Shared
 
 
-<h1 class="page-title">Details for @Project.Title</h1>
+
+<h3>ProjectDetails @ProjectId</h3>
 
 
-<div class="col-12 row">
-    <div class="col-2">
-    </div>
-    <div class="col-10 row">
-        <div class="col-xs-12 col-sm-8">
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Project ID</label>
-                <div class="col-sm-8">
-                    <label type="text" class="form-control-plaintext">@Project.Id</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Title</label>
-                <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@Project.Title</label>
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Project Requirement</label>
-                <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@Project.Requirement</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Project Design</label>
-                <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@Project.Design</label>
-                </div>
-            </div>
+<div class="form-group">
+    <label asp-for="Title">Project Title:</label>
+    <input @bind-value="@projectName" class="form-control" />
+</div>
+<div class="form-group">
+    <label asp-for="Body">Requirements: </label>
+    <input @bind-value="@projectRequirements" class="form-control" rows="4">
+</div>
+<div class="form-group">
+    <label asp-for="Body">Design: </label>
+    <input @bind-value="@projectDesign" class="form-control" rows="4">
+</div>
+<div class="form-group">
+    <label asp-for="Body">Completion Date: </label>
+    <input @bind-value="projectCompletionDate" type="date" />
+</div>
+<button>save</button>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Completion Date</label>
-                <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@Project.CompletionDate.ToShortDateString()</label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
+
+
+
+@code { [Parameter]
+    public int ProjectId { get; set; }
+
+
+
+    private string projectName;
+    private string projectRequirements;
+    private string projectDesign;
+    private DateTime projectCompletionDate;
+
+
+
+
+    private Project projects = new Project();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var project = await http.GetFromJsonAsync<IEnumerable<Project>>($"api/project/projectdetails/{ProjectId}");
+
+
+
+        projectName = project.First().Title;
+        projectRequirements = project.First().Requirements;
+        projectDesign = project.First().Design;
+        projectCompletionDate = project.First().CompletionDate;
+    }
+
+
+
+    private async Task updateProject()
+    {
+        var project = new Project
+        {
+            Title = projectName,
+            Requirements = projectRequirements,
+            Design = projectDesign,
+            CompletionDate = projectCompletionDate
+        };
+        try
+        {
+            var response = await http.PostAsJsonAsync("/api/project/", project);
+        }
+        catch (Exception e)
+        {
+        }
+    } }
