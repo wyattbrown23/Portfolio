@@ -25,8 +25,9 @@ namespace Portfolio.API.Data
             context.Projects.Add(project);
             await context.SaveChangesAsync();
         }
-        public async Task DeleteProjectAsync(Project project)
+        public async Task DeleteProjectAsync(int id)
         {
+            var project = await context.Projects.FindAsync(id);
             context.Projects.Remove(project);
             await context.SaveChangesAsync();
         }

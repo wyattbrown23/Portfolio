@@ -17,19 +17,13 @@ namespace Portfolio.API.Controllers
     {
         private readonly IRepository repository;
 
-
-
         public ProjectController(IRepository repository)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-
-
         [HttpGet()]
         public async Task<IEnumerable<Project>> Get() => await repository.Projects.ToListAsync();
-
-
 
         [HttpPost]
         public async Task Post(Project project)
@@ -37,20 +31,17 @@ namespace Portfolio.API.Controllers
             await repository.SaveProjectAsync(project);
         }
 
-
-
         [HttpGet("projectdetails/{id}")]
         public IQueryable<Project> GetProjectDetailsById(int id)
         {
             return repository.Projects.Where(b => b.Id == id);
         }
-        [HttpDelete]
-        public async void DeleteProject(Project project)
+
+        [HttpDelete("[action]/{id}")]
+        public async Task DeleteProject(int id)
         {
-            await repository.DeleteProjectAsync(project);
+            await repository.DeleteProjectAsync(id);
         }
-
-
 
         [HttpPost("Update")]
         public async Task UpdateProjectDetails(Project project)
