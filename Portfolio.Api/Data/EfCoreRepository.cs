@@ -1,4 +1,5 @@
-﻿using Portfolio.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Api.Data;
 using Portfolio.Shared;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,29 @@ namespace Portfolio.API.Data
 
         public IQueryable<Project> Projects => context.Projects;
 
-        public async Task AddCategoryAsync(Category category)
+        public async Task AssignCategoryAsync(AssignRequest assignRequest)
         {
-            context.Categories.Add(category);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task AssignCategoryAsync(ProjectCategory projectCategory)
-        {
-            context.ProjectCategories.Add(projectCategory);
-            await context.SaveChangesAsync();
+            switch (assignRequest.CategoryType)
+            {
+                case Project.LanguageCategory:
+                    var language = await context.Languages.FirstOrDefaultAsync(l => l.Name == assignRequest.Name);
+                    if (language == null)
+                    {
+                        language = new Language { Name = assignRequest.Name };
+                        context.Languages.Add(language);
+                        await context.SaveChangesAsync();
+                    }
+                    var lc = new ProjectLanguage
+                    {
+                        ProjectId = assignRequest.ProjectId,
+                        LanguageId = language.Id
+                    };
+                    context.ProjectLanguages.Add(lc);
+                    await context.SaveChangesAsync();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public async Task SaveProjectAsync(Project project)

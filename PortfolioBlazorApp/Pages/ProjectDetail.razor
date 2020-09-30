@@ -1,6 +1,8 @@
 ﻿@page "/projectdetails/{ProjectId:int}"
 @inject HttpClient http
+@inject Portfolio.BlazorWasm.ProjectApiService projectApi
 @using Portfolio.Shared
+@using Portfolio.Shared.ViewModels
 
 
 
@@ -39,15 +41,21 @@
                 <div class="col-sm-8">
                     <label type="text" readonly class="form-control-plaintext">@projectCompletionDate.ToShortDateString()</label>
                 </div>
+
+                <div>
+                    <div>Language</div>
+                    <div><input @bind-value="newLanguage" /><button @onclick="assignLanguage">Add</button></div>
+                    <ul>
+                        @foreach (var lang in SelectedProject.Languages)
+                        {
+            <li><a href="langauges/@lang.Id">@lang.Name</a></li>}
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
 
 
 <hr />
@@ -75,7 +83,11 @@
 
 
 @code { [Parameter]
-        public int ProjectId { get; set; }
+    public int ProjectId { get; set; }
+    public int Id { get; set; }
+    string newLanguage;
+
+
 
     private string projectName;
     private string projectRequirements;
@@ -84,21 +96,25 @@
 
 
 
-    public Project SelectedProject { get; set; } = new Project();
+    public ProjectViewModel SelectedProject { get; set; } = new ProjectViewModel();
+    public Project project { get; set; } = new Project();
+
+
+
 
     protected override async Task OnInitializedAsync()
     {
         if (ProjectId == 0)
             return;
         var projects = (await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/"));
-        SelectedProject = projects.FirstOrDefault(p => p.Id == ProjectId);
+        project = projects.FirstOrDefault(p => p.Id == ProjectId);
 
 
 
-        projectName = SelectedProject.Title;
-        projectRequirements = SelectedProject.Requirements;
-        projectDesign = SelectedProject.Design;
-        projectCompletionDate = SelectedProject.CompletionDate;
+        projectName = project.Title;
+        projectRequirements = project.Requirements;
+        projectDesign = project.Design;
+        projectCompletionDate = project.CompletionDate;
     }
 
 
@@ -115,9 +131,22 @@
         };
         try
         {
-            var response = await http.PostAsJsonAsync("api/project/update", project);
+            var response = await http.PostAsJsonAsync("/api/project/update", project);
         }
         catch (Exception e)
         {
         }
-    } }
+    }
+
+
+
+    async Task refreshAsync() => SelectedProject = await projectApi.GetProjectByIDAsync(Id);
+
+
+
+    private async Task assignLanguage()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.LanguageCategory, SelectedProject.Id, newLanguage);
+        await refreshAsync();
+    } 
+    }

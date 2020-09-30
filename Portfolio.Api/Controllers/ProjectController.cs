@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
 using Portfolio.Shared;
-
-
+using Portfolio.Shared.ViewModels;
 
 namespace Portfolio.API.Controllers
 {
@@ -23,29 +22,30 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpGet()]
-        public async Task<IEnumerable<Project>> Get()
+        public async Task<IEnumerable<ProjectViewModel>> Get()
         {
             return await repository.Projects
-                .Include(p => p.ProjectCategories)
-                    .ThenInclude(pc => pc.Category)
+                .Include(p => p.ProjectLanguages)
+                    .ThenInclude(pc => pc.Language)
+                .Select(p => new ProjectViewModel(p))
                 .ToListAsync();
         } 
 
-        [HttpPost]
+        [HttpPost()]
         public async Task Post(Project project)
         {
             await repository.SaveProjectAsync(project);
         }
 
         [HttpGet("projectdetails/{id}")]
-        public async Task<string> GetProjectDetailsById(int id)
+        public async Task<ProjectViewModel> GetProjectDetailsById(int id)
         {
-            var allProjects = await repository.Projects
-               .Include(p => p.ProjectCategories)
-                   .ThenInclude(pc => pc.Category)
-               .ToListAsync();
+            var project = await repository.Projects
+               .Include(p => p.ProjectLanguages)
+                   .ThenInclude(pc => pc.Language)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-            return $"You asked for details of {id}";
+            return new ProjectViewModel(project);
         }
 
         [HttpDelete("[action]/{id}")]
@@ -61,9 +61,9 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task AssignCategory(ProjectCategory projectCategory)
+        public async Task Assign(AssignRequest assignRequest)
         {
-            await repository.AssignCategoryAsync(projectCategory);
+            await repository.AssignCategoryAsync(assignRequest);
         }
 
     }
