@@ -23,7 +23,13 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpGet()]
-        public async Task<IEnumerable<Project>> Get() => await repository.Projects.ToListAsync();
+        public async Task<IEnumerable<Project>> Get()
+        {
+            return await repository.Projects
+                .Include(p => p.ProjectCategories)
+                    .ThenInclude(pc => pc.Category)
+                .ToListAsync();
+        } 
 
         [HttpPost]
         public async Task Post(Project project)
@@ -32,9 +38,14 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpGet("projectdetails/{id}")]
-        public IQueryable<Project> GetProjectDetailsById(int id)
+        public async Task<string> GetProjectDetailsById(int id)
         {
-            return repository.Projects.Where(b => b.Id == id);
+            var allProjects = await repository.Projects
+               .Include(p => p.ProjectCategories)
+                   .ThenInclude(pc => pc.Category)
+               .ToListAsync();
+
+            return $"You asked for details of {id}";
         }
 
         [HttpDelete("[action]/{id}")]
@@ -47,6 +58,12 @@ namespace Portfolio.API.Controllers
         public async Task UpdateProjectDetails(Project project)
         {
             await repository.UpdateProjectDetailsAsync(project);
+        }
+
+        [HttpPost("[action]")]
+        public async Task AssignCategory(ProjectCategory projectCategory)
+        {
+            await repository.AssignCategoryAsync(projectCategory);
         }
 
     }

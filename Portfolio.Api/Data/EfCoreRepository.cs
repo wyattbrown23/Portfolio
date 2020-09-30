@@ -20,6 +20,18 @@ namespace Portfolio.API.Data
 
         public IQueryable<Project> Projects => context.Projects;
 
+        public async Task AddCategoryAsync(Category category)
+        {
+            context.Categories.Add(category);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task AssignCategoryAsync(ProjectCategory projectCategory)
+        {
+            context.ProjectCategories.Add(projectCategory);
+            await context.SaveChangesAsync();
+        }
+
         public async Task SaveProjectAsync(Project project)
         {
             context.Projects.Add(project);

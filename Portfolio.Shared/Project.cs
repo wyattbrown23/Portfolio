@@ -18,5 +18,7 @@ namespace Portfolio.Shared
         public string Design { get; set; }
         [JsonPropertyName("completionDate")]
         public DateTime CompletionDate { get; set; }
+
+        public List<ProjectCategory> ProjectCategories { get; set; }
     }
 }
