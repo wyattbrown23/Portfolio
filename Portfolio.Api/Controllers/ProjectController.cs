@@ -25,6 +25,10 @@ namespace Portfolio.API.Controllers
         public async Task<IEnumerable<ProjectViewModel>> Get()
         {
             return await repository.Projects
+                .Include(p => p.ProjectTechnologies)
+                   .ThenInclude(pc => pc.Technology)
+                 .Include(p => p.ProjectPlatforms)
+                   .ThenInclude(pc => pc.Platform)
                 .Include(p => p.ProjectLanguages)
                     .ThenInclude(pc => pc.Language)
                 .Select(p => new ProjectViewModel(p))
@@ -41,6 +45,10 @@ namespace Portfolio.API.Controllers
         public async Task<ProjectViewModel> GetProjectDetailsById(int id)
         {
             var project = await repository.Projects
+                .Include(p => p.ProjectTechnologies)
+                   .ThenInclude(pc => pc.Technology)
+                .Include(p => p.ProjectPlatforms)
+                   .ThenInclude(pc => pc.Platform)
                .Include(p => p.ProjectLanguages)
                    .ThenInclude(pc => pc.Language)
                 .FirstOrDefaultAsync(p => p.Id == id);
