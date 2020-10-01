@@ -48,7 +48,27 @@
                     <ul>
                         @foreach (var lang in LanguageList)
                         {
-            <li><a href="langauges/@lang.Id">@lang.Name</a></li>}
+            <li><a href="langauges/@lang.Id">@lang.Name</a></li>            }
+                    </ul>
+                </div>
+
+                <div>
+                    <div>Platform</div>
+                    <div><input @bind-value="newPlatform" /><button @onclick="assignPlatform">Add</button></div>
+                    <ul>
+                        @foreach (var plat in PlatformList)
+                        {
+            <li><a href="langauges/@plat.Id">@plat.Name</a></li>            }
+                    </ul>
+                </div>
+
+                <div>
+                    <div>Technology</div>
+                    <div><input @bind-value="newTechnology" /><button @onclick="assignTechnology">Add</button></div>
+                    <ul>
+                        @foreach (var tech in TechnologyList)
+                        {
+            <li><a href="langauges/@tech.Id">@tech.Name</a></li>}
                     </ul>
                 </div>
 
@@ -86,6 +106,8 @@
     public int ProjectId { get; set; }
     public int Id { get; set; }
     string newLanguage;
+    string newPlatform;
+    string newTechnology;
 
 
 
@@ -100,6 +122,8 @@
     public Project project { get; set; } = new Project();
 
     public IEnumerable<LanguageViewModel> LanguageList = new List<LanguageViewModel>();
+    public IEnumerable<PlatformViewModel> PlatformList = new List<PlatformViewModel>();
+    public IEnumerable<TechnologyViewModel> TechnologyList = new List<TechnologyViewModel>();
 
 
 
@@ -119,6 +143,8 @@
         projectCompletionDate = SelectedProject.CompletionDate;
 
         LanguageList = SelectedProject.Languages;
+        PlatformList = SelectedProject.Platforms;
+        TechnologyList = SelectedProject.Technologies;
     }
 
 
@@ -153,4 +179,15 @@
         await projectApi.AssignAsync(Portfolio.Shared.Project.LanguageCategory, SelectedProject.Id, newLanguage);
         await refreshAsync();
     }
+
+    private async Task assignPlatform()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.PlatformCategory, SelectedProject.Id, newPlatform);
+        await refreshAsync();
     }
+
+    private async Task assignTechnology()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.TechnologyCategory, SelectedProject.Id, newTechnology);
+        await refreshAsync();
+    } }
