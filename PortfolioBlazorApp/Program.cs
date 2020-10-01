@@ -19,6 +19,7 @@ namespace PortfolioBlazorApp
 
             var baseAddress = builder.Configuration["Endpoint Base Address"];
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
+            builder.Services.AddScoped<ProjectApiService>();
 
             await builder.Build().RunAsync();
         }

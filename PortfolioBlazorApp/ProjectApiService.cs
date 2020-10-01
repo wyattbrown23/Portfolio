@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Portfolio.BlazorWasm
+namespace PortfolioBlazorApp
 {
     public class ProjectApiService
     {
@@ -32,7 +32,7 @@ namespace Portfolio.BlazorWasm
 
         public async Task<ProjectViewModel> GetProjectByIDAsync(int id)
         {
-            return await client.GetFromJsonAsync<ProjectViewModel>($"api/project/{id}");
+            return await client.GetFromJsonAsync<ProjectViewModel>($"api/project/projectdetails/{id}");
         }
 
         public async Task AssignAsync(string categoryType, int projectId, string newName)
@@ -43,7 +43,7 @@ namespace Portfolio.BlazorWasm
                 Name = newName,
                 ProjectId = projectId
             };
-            await client.PostAsJsonAsync($"api/project/assign/", assignBody);
+            await client.PostAsJsonAsync($"api/project/assign", assignBody);
         }
     }
 }
