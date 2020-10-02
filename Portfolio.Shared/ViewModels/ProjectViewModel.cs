@@ -20,6 +20,7 @@ namespace Portfolio.Shared.ViewModels
             Title = p.Title;
             Requirements = p.Requirements;
             Design = p.Design;
+            CompletionDate = p.CompletionDate;
             Languages = new List<LanguageViewModel>(p.ProjectLanguages.Select(pl => new LanguageViewModel(pl.Language)));
             Platforms = new List<PlatformViewModel>(p.ProjectPlatforms.Select(pl => new PlatformViewModel(pl.Platform)));
             Technologies = new List<TechnologyViewModel>(p.ProjectTechnologies.Select(pl => new TechnologyViewModel(pl.Technology)));
