@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Portfolio.Api.Data;
 using Portfolio.Shared;
+using Portfolio.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace Portfolio.API.Data
         }
 
         public IQueryable<Project> Projects => context.Projects;
+        public IQueryable<Language> Languages => context.Languages;
+
+        public IQueryable<Platform> Platforms => context.Platforms;
+
+        public IQueryable<Technology> Technologies => context.Technologies;
 
         public async Task AssignCategoryAsync(AssignRequest assignRequest)
         {
@@ -80,8 +86,16 @@ namespace Portfolio.API.Data
             }
         }
 
-        public async Task SaveProjectAsync(Project project)
+        public async Task SaveProjectAsync(ProjectViewModel projectViewModel)
         {
+            var project = new Project()
+            {
+                Title = projectViewModel.Title,
+                Requirements = projectViewModel.Requirements,
+                Design = projectViewModel.Design,
+                CompletionDate = projectViewModel.CompletionDate,
+            };
+
             context.Projects.Add(project);
             await context.SaveChangesAsync();
         }
@@ -91,8 +105,17 @@ namespace Portfolio.API.Data
             context.Projects.Remove(project);
             await context.SaveChangesAsync();
         }
-        public async Task UpdateProjectDetailsAsync(Project project)
+        public async Task UpdateProjectDetailsAsync(ProjectViewModel projectViewModel)
         {
+            var project = new Project()
+            {
+                Id = projectViewModel.Id,
+                Title = projectViewModel.Title,
+                Requirements = projectViewModel.Requirements,
+                Design = projectViewModel.Design,
+                CompletionDate = projectViewModel.CompletionDate,
+            };
+
             context.Projects.Update(project);
             await context.SaveChangesAsync();
         }

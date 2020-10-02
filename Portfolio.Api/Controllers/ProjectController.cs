@@ -36,7 +36,7 @@ namespace Portfolio.API.Controllers
         } 
 
         [HttpPost()]
-        public async Task Post(Project project)
+        public async Task Post(ProjectViewModel project)
         {
             await repository.SaveProjectAsync(project);
         }
@@ -63,7 +63,7 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpPost("Update")]
-        public async Task UpdateProjectDetails(Project project)
+        public async Task UpdateProjectDetails(ProjectViewModel project)
         {
             await repository.UpdateProjectDetailsAsync(project);
         }

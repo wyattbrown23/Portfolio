@@ -22,9 +22,11 @@ namespace Portfolio.Shared
         public string Design { get; set; }
         [JsonPropertyName("completionDate")]
         public DateTime CompletionDate { get; set; }
-
+        [JsonPropertyName("languages")]
         public List<ProjectLanguage> ProjectLanguages { get; set; }
+        [JsonPropertyName("platforms")]
         public List<ProjectPlatform> ProjectPlatforms { get; set; }
+        [JsonPropertyName("technologies")]
         public List<ProjectTechnology> ProjectTechnologies { get; set; }
     }
 }

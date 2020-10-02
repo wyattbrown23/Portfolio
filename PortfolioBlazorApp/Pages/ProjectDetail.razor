@@ -58,7 +58,7 @@
                     <ul>
                         @foreach (var plat in PlatformList)
                         {
-            <li><a href="langauges/@plat.Id">@plat.Name</a></li>            }
+            <li><a href="platform/@plat.Id">@plat.Name</a></li>            }
                     </ul>
                 </div>
 
@@ -68,7 +68,7 @@
                     <ul>
                         @foreach (var tech in TechnologyList)
                         {
-            <li><a href="langauges/@tech.Id">@tech.Name</a></li>}
+            <li><a href="technology/@tech.Id">@tech.Name</a></li>}
                     </ul>
                 </div>
 
@@ -121,9 +121,9 @@
     public ProjectViewModel SelectedProject { get; set; } = new ProjectViewModel();
     public Project project { get; set; } = new Project();
 
-    public IEnumerable<LanguageViewModel> LanguageList = new List<LanguageViewModel>();
-    public IEnumerable<PlatformViewModel> PlatformList = new List<PlatformViewModel>();
-    public IEnumerable<TechnologyViewModel> TechnologyList = new List<TechnologyViewModel>();
+    public IEnumerable<BasicLanguage> LanguageList = new List<BasicLanguage>();
+    public IEnumerable<BasicPlatform> PlatformList = new List<BasicPlatform>();
+    public IEnumerable<BasicTechnology> TechnologyList = new List<BasicTechnology>();
 
 
 

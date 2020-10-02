@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.Api", "Portfolio.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioBlazorApp", "PortfolioBlazorApp\PortfolioBlazorApp.csproj", "{8F9B0265-1D5E-4C7E-86FF-2A68A4463368}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.Shared", "Portfolio.Shared\Portfolio.Shared.csproj", "{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.Shared", "Portfolio.Shared\Portfolio.Shared.csproj", "{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

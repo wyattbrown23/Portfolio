@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 
 namespace Portfolio.Shared.ViewModels
 {
@@ -11,7 +9,9 @@ namespace Portfolio.Shared.ViewModels
     {
         public ProjectViewModel()
         {
-            Languages = new List<LanguageViewModel>();
+            Languages = new List<BasicLanguage>();
+            Platforms = new List<BasicPlatform>();
+            Technologies = new List<BasicTechnology>();
         }
 
         public ProjectViewModel(Project p)
@@ -19,11 +19,11 @@ namespace Portfolio.Shared.ViewModels
             Id = p.Id;
             Title = p.Title;
             Requirements = p.Requirements;
-            Design = p.Design;
             CompletionDate = p.CompletionDate;
-            Languages = new List<LanguageViewModel>(p.ProjectLanguages.Select(pl => new LanguageViewModel(pl.Language)));
-            Platforms = new List<PlatformViewModel>(p.ProjectPlatforms.Select(pl => new PlatformViewModel(pl.Platform)));
-            Technologies = new List<TechnologyViewModel>(p.ProjectTechnologies.Select(pl => new TechnologyViewModel(pl.Technology)));
+            Design = p.Design;
+            Languages = new List<BasicLanguage>(p.ProjectLanguages.Select(pl => new BasicLanguage(pl.Language)));
+            Platforms = new List<BasicPlatform>(p.ProjectPlatforms.Select(pp => new BasicPlatform(pp.Platform)));
+            Technologies = new List<BasicTechnology>(p.ProjectTechnologies.Select(pt => new BasicTechnology(pt.Technology)));
         }
 
         public int Id { get; set; }
@@ -31,8 +31,9 @@ namespace Portfolio.Shared.ViewModels
         public string Requirements { get; set; }
         public string Design { get; set; }
         public DateTime CompletionDate { get; set; }
-        public IEnumerable<LanguageViewModel> Languages { get; set; }
-        public IEnumerable<PlatformViewModel> Platforms { get; set; }
-        public IEnumerable<TechnologyViewModel> Technologies { get; set; }
+        public IList<BasicLanguage> Languages { get; set; }
+        public IList<BasicPlatform> Platforms { get; set; }
+        public IList<BasicTechnology> Technologies { get; set; }
     }
 }
+
