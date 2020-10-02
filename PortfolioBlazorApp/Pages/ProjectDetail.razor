@@ -132,19 +132,7 @@
     {
         if (ProjectId == 0)
             return;
-        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{ProjectId}"));
-
-
-
-
-        projectName = SelectedProject.Title;
-        projectRequirements = SelectedProject.Requirements;
-        projectDesign = SelectedProject.Design;
-        projectCompletionDate = SelectedProject.CompletionDate;
-
-        LanguageList = SelectedProject.Languages;
-        PlatformList = SelectedProject.Platforms;
-        TechnologyList = SelectedProject.Technologies;
+        await refreshAsync();
     }
 
 
@@ -170,7 +158,19 @@
 
 
 
-    async Task refreshAsync() => SelectedProject = await projectApi.GetProjectByIDAsync(ProjectId);
+    async Task refreshAsync()
+    {
+        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{ProjectId}"));
+
+        projectName = SelectedProject.Title;
+        projectRequirements = SelectedProject.Requirements;
+        projectDesign = SelectedProject.Design;
+        projectCompletionDate = SelectedProject.CompletionDate;
+
+        LanguageList = SelectedProject.Languages;
+        PlatformList = SelectedProject.Platforms;
+        TechnologyList = SelectedProject.Technologies;
+    }
 
 
 
