@@ -5,7 +5,7 @@
 
 <h3>Categories</h3>
 <div>
-    <h4>Languages</h4>
+    <h4><a href="./language">Languages</a></h4>
     <ul>
         @foreach (var l in languages)
         {
@@ -16,7 +16,7 @@
     </ul>
 </div>
 <div>
-    <h4>Platforms></h4>
+    <h4><a href="./platform">Platforms</a></h4>
     <ul>
         @foreach (var p in platforms)
         {
@@ -28,12 +28,12 @@
 </div>
 
 <div>
-    <h4>Technologies</h4>
+    <h4><a href="./technology">Technologies</a></h4>
     <ul>
         @foreach (var t in technologies)
         {
             <li>
-                <a href="./language/@t.Id"> @t.Name</a>
+                <a href="./technology/@t.Id"> @t.Name</a>
             </li>
         }
     </ul>
