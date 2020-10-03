@@ -1,0 +1,41 @@
+﻿@page "/technology/{TechnologyId:int}"
+
+@inject HttpClient http
+@using Portfolio.Shared.ViewModels
+@using Portfolio.Shared
+
+<h3>@technologyName</h3>
+
+@foreach (var p in projects)
+{
+    <li><a href="ProjectDetails/@p.Id">@p.Title</a></li>
+}
+
+
+
+@code {[Parameter]
+    public int TechnologyId { get; set; }
+    public int Id { get; set; }
+    private string technologyName;
+
+    private TechnologyViewModel technologies = new TechnologyViewModel();
+    public IEnumerable<BasicProject> projects = new List<BasicProject>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (TechnologyId == 0)
+            return;
+        await refreshAsync();
+    }
+
+    async Task refreshAsync()
+    {
+        technologies = await http.GetFromJsonAsync<TechnologyViewModel>($"/api/category/GetTechnologiesWithProjectsById/{TechnologyId}");
+
+
+        technologyName = technologies.Name;
+        projects = technologies.Projects;
+
+    }
+}

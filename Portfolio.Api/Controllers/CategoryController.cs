@@ -66,6 +66,28 @@ namespace Portfolio.API.Controllers
             return new LanguageViewModel(language);
         }
 
+        [HttpGet("[action]/{id}")]
+        public async Task<PlatformViewModel> GetPlatformsWithProjectsById(int id)
+        {
+            var platform = await repository.Platforms
+                .Include(p => p.ProjectPlatforms)
+                    .ThenInclude(pp => pp.Project)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            return new PlatformViewModel(platform);
+        }
+
+        [HttpGet("[action]/{id}")]
+        public async Task<TechnologyViewModel> GetTechnologiesWithProjectsById(int id)
+        {
+            var technology = await repository.Technologies
+                .Include(t => t.ProjectTechnologies)
+                    .ThenInclude(pt => pt.Project)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            return new TechnologyViewModel(technology);
+        }
+
         [HttpGet("[action]")]
         public async Task<List<PlatformViewModel>> GetPlatformsWithProjects()
         {

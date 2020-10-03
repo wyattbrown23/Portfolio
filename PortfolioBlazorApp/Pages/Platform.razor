@@ -12,9 +12,10 @@
                 <a href="./language/@p.Id"> @p.Name</a>
             </li>
             <ul>
+                <h5>Projects</h5>
+
                 @foreach (var pp in p.Projects)
                 {
-                    <h5>Projects</h5>
                     <li><a href="ProjectDetails/@pp.Id">@pp.Title</a></li>
                 }
             </ul>

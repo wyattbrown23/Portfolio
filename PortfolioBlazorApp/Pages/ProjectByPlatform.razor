@@ -1,0 +1,41 @@
+﻿@page "/platform/{PlatformId:int}"
+
+@inject HttpClient http
+@using Portfolio.Shared.ViewModels
+@using Portfolio.Shared
+
+<h3>@platformName</h3>
+
+@foreach (var p in projects)
+{
+    <li><a href="ProjectDetails/@p.Id">@p.Title</a></li>
+}
+
+
+
+@code {[Parameter]
+    public int PlatformId { get; set; }
+    public int Id { get; set; }
+    private string platformName;
+
+    private PlatformViewModel platforms = new PlatformViewModel();
+    public IEnumerable<BasicProject> projects = new List<BasicProject>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PlatformId == 0)
+            return;
+        await refreshAsync();
+    }
+
+    async Task refreshAsync()
+    {
+        platforms = await http.GetFromJsonAsync<PlatformViewModel>($"/api/category/GetPlatformsWithProjectsById/{PlatformId}");
+
+
+        platformName = platforms.Name;
+        projects = platforms.Projects;
+
+    }
+}
