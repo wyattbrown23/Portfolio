@@ -9,8 +9,14 @@
         @foreach (var p in platforms)
         {
             <li>
-                <a href="./platform/@p.Id"> @p.Name</a>
+                <a href="./language/@p.Id"> @p.Name</a>
             </li>
+            <ul>
+                @foreach (var pp in p.Projects)
+                {
+                    <li>@pp.Title</li>
+                }
+            </ul>
         }
     </ul>
 </div>
@@ -26,8 +32,7 @@
 
     private async Task RefreshCategoriesAsync()
     {
-        platforms = await http.GetFromJsonAsync<IEnumerable<PlatformViewModel>>("/api/category/GetPlatforms");
+        platforms = await http.GetFromJsonAsync<IEnumerable<PlatformViewModel>>("/api/category/GetPlatformsWithProjects");
     }
-
 
 }

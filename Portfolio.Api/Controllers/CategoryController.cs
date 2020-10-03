@@ -54,7 +54,7 @@ namespace Portfolio.API.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("platform")]
+        [HttpGet("[action]")]
         public async Task<List<PlatformViewModel>> GetPlatformsWithProjects()
         {
             return await repository.Platforms
@@ -64,7 +64,7 @@ namespace Portfolio.API.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("technology")]
+        [HttpGet("[action]")]
         public async Task<List<TechnologyViewModel>> GetTechnologiesWithProjects()
         {
             return await repository.Technologies

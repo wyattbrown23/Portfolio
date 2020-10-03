@@ -12,9 +12,9 @@
                 <a href="./language/@l.Id"> @l.Name</a>
             </li>
             <ul>
-                @foreach (var pl in projectLanguages)
+                @foreach (var pl in l.Projects)
                 {
-                    <li>@pl.Projects.Select(pl => pl.Title)</li>
+                    <li>@pl.Title</li>
                 }
             </ul>
         }
@@ -24,7 +24,6 @@
 
 @code {
     private IEnumerable<LanguageViewModel> languages = new List<LanguageViewModel>();
-    private IEnumerable<LanguageViewModel> projectLanguages = new List<LanguageViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,8 +32,7 @@
 
     private async Task RefreshCategoriesAsync()
     {
-        languages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLanguages");
-        projectLanguages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLangaugesWithProjects");
+        languages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLangaugesWithProjects");
     }
 
 }

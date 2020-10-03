@@ -11,6 +11,12 @@
             <li>
                 <a href="./technology/@t.Id"> @t.Name</a>
             </li>
+            <ul>
+                @foreach (var pt in t.Projects)
+                {
+                    <li>@pt.Title</li>
+                }
+            </ul>
         }
     </ul>
 </div>
@@ -26,7 +32,7 @@
 
     private async Task RefreshCategoriesAsync()
     {
-        technologies = await http.GetFromJsonAsync<IEnumerable<TechnologyViewModel>>("/api/category/GetTechnologies");
+        technologies = await http.GetFromJsonAsync<IEnumerable<TechnologyViewModel>>("/api/category/GetTechnologiesWithProjects");
     }
 
 }
