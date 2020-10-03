@@ -3,10 +3,31 @@
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 
-<h3>Technologies</h3>
+<div>
+    <h4>Technologies</h4>
+    <ul>
+        @foreach (var t in technologies)
+        {
+            <li>
+                <a href="./technology/@t.Id"> @t.Name</a>
+            </li>
+        }
+    </ul>
+</div>
 
 
 @code {
+    private IEnumerable<TechnologyViewModel> technologies = new List<TechnologyViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshCategoriesAsync();
+    }
+
+    private async Task RefreshCategoriesAsync()
+    {
+        technologies = await http.GetFromJsonAsync<IEnumerable<TechnologyViewModel>>("/api/category/GetTechnologies");
+    }
 
 }
 

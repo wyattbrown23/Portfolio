@@ -3,9 +3,38 @@
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 
-<h3>Languages</h3>
+<div>
+    <h4>Languages</h4>
+    <ul>
+        @foreach (var l in languages)
+        {
+            <li>
+                <a href="./language/@l.Id"> @l.Name</a>
+            </li>
+            <ul>
+                @foreach (var pl in projectLanguages)
+                {
+                    <li>@pl.Projects.Select(pl => pl.Title)</li>
+                }
+            </ul>
+        }
+    </ul>
+</div>
 
 
 @code {
+    private IEnumerable<LanguageViewModel> languages = new List<LanguageViewModel>();
+    private IEnumerable<LanguageViewModel> projectLanguages = new List<LanguageViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshCategoriesAsync();
+    }
+
+    private async Task RefreshCategoriesAsync()
+    {
+        languages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLanguages");
+        projectLanguages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLangaugesWithProjects");
+    }
 
 }

@@ -44,7 +44,7 @@ namespace Portfolio.API.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("language")]
+        [HttpGet("[action]")]
         public async Task<List<LanguageViewModel>> GetLangaugesWithProjects()
         {
             return await repository.Languages

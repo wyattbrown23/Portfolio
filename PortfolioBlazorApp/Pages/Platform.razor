@@ -3,9 +3,31 @@
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 
-<h3>Platforms</h3>
+<div>
+    <h4>Platforms</h4>
+    <ul>
+        @foreach (var p in platforms)
+        {
+            <li>
+                <a href="./platform/@p.Id"> @p.Name</a>
+            </li>
+        }
+    </ul>
+</div>
 
 
 @code {
+    private IEnumerable<PlatformViewModel> platforms = new List<PlatformViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshCategoriesAsync();
+    }
+
+    private async Task RefreshCategoriesAsync()
+    {
+        platforms = await http.GetFromJsonAsync<IEnumerable<PlatformViewModel>>("/api/category/GetPlatforms");
+    }
+
 
 }
