@@ -14,7 +14,8 @@
             <ul>
                 @foreach (var pt in t.Projects)
                 {
-                    <li>@pt.Title</li>
+                <h5>Projects</h5>
+                <li><a href="ProjectDetails/@pt.Id">@pt.Title</a></li>
                 }
             </ul>
         }
