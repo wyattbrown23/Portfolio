@@ -4,25 +4,22 @@
 @using Portfolio.Shared.ViewModels
 @using Portfolio.Shared
 
-<h3>Languages</h3>
+<h3>@languageName</h3>
 
-<ul>
-    @foreach (var l in languages)
-    {
-        <li>
-            <a href="./language/@l.Id"> @l.Name</a>
-        </li>
-    }
-</ul>
+@foreach (var p in projects)
+{
+    <li><a href="ProjectDetails/@p.Id">@p.Title</a></li>
+}
+
 
 
 @code {[Parameter]
     public int LanguageId { get; set; }
     public int Id { get; set; }
+    private string languageName;
 
-    public IEnumerable<BasicProject> ProjectList = new List<BasicProject>();
-    public LanguageViewModel SelectedLanguage { get; set; } = new LanguageViewModel();
-    private IEnumerable<LanguageViewModel> languages = new List<LanguageViewModel>();
+    private LanguageViewModel languages = new LanguageViewModel();
+    public IEnumerable<BasicProject> projects = new List<BasicProject>();
 
 
     protected override async Task OnInitializedAsync()
@@ -34,9 +31,11 @@
 
     async Task refreshAsync()
     {
-        //SelectedLanguage = (await http.GetFromJsonAsync<LanguageViewModel>($"/api/project/projectdetails/{LanguageId}"));
-        languages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLanguages");
+        languages = await http.GetFromJsonAsync<LanguageViewModel>($"/api/category/GetLangaugesWithProjectsById/{LanguageId}");
 
-       // ProjectList = SelectedLanguage.Projects;
+
+        languageName = languages.Name;
+        projects = languages.Projects;
+
     }
 }

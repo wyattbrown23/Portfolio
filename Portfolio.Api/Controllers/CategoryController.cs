@@ -54,6 +54,18 @@ namespace Portfolio.API.Controllers
                 .ToListAsync();
         }
 
+
+        [HttpGet("[action]/{id}")]
+        public async Task<LanguageViewModel> GetLangaugesWithProjectsById(int id)
+        {
+            var language = await repository.Languages
+                .Include(l => l.ProjectLanguages)
+                    .ThenInclude(pl => pl.Project)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            return new LanguageViewModel(language);
+        }
+
         [HttpGet("[action]")]
         public async Task<List<PlatformViewModel>> GetPlatformsWithProjects()
         {
