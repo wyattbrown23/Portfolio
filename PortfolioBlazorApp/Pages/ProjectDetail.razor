@@ -1,4 +1,4 @@
-﻿@page "/projectdetails/{ProjectId:int}"
+﻿@page "/projectdetails/{slug}"
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
 @using Portfolio.Shared
@@ -104,6 +104,9 @@
 
 @code { [Parameter]
     public int ProjectId { get; set; }
+    [Parameter]
+    public string Slug { get; set; }
+
     public int Id { get; set; }
     string newLanguage;
     string newPlatform;
@@ -130,7 +133,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (ProjectId == 0)
+        if (ProjectId == 0 && Slug == null)
             return;
         await refreshAsync();
     }
@@ -160,8 +163,9 @@
 
     async Task refreshAsync()
     {
-        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{ProjectId}"));
+        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
 
+        ProjectId = SelectedProject.Id;
         projectName = SelectedProject.Title;
         projectRequirements = SelectedProject.Requirements;
         projectDesign = SelectedProject.Design;

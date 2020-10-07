@@ -28,5 +28,6 @@ namespace Portfolio.Shared
         public List<ProjectPlatform> ProjectPlatforms { get; set; }
         [JsonPropertyName("technologies")]
         public List<ProjectTechnology> ProjectTechnologies { get; set; }
+        public string Slug { get; set; }
     }
 }

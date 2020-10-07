@@ -95,8 +95,18 @@ namespace Portfolio.API.Data
                 Design = projectViewModel.Design,
                 CompletionDate = projectViewModel.CompletionDate,
             };
+            if(project.Id == 0)
+            {
+                project.Slug = project.Title.ToSlug();
+                context.Projects.Add(project);
+            }
+            else
+            {
+                project.Slug = project.Title.ToSlug();
+                context.Projects.Update(project);
+            }
 
-            context.Projects.Add(project);
+            //context.Projects.Add(project);
             await context.SaveChangesAsync();
         }
         public async Task DeleteProjectAsync(int id)
@@ -116,7 +126,18 @@ namespace Portfolio.API.Data
                 CompletionDate = projectViewModel.CompletionDate,
             };
 
-            context.Projects.Update(project);
+            if (project.Id == 0)
+            {
+                project.Slug = project.Title.ToSlug();
+                context.Projects.Update(project);
+            }
+            else
+            {
+                project.Slug = project.Title.ToSlug();
+                context.Projects.Update(project);
+            }
+
+            //context.Projects.Update(project);
             await context.SaveChangesAsync();
         }
     }

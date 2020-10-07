@@ -24,6 +24,7 @@ namespace Portfolio.Shared.ViewModels
             Languages = new List<BasicLanguage>(p.ProjectLanguages.Select(pl => new BasicLanguage(pl.Language)));
             Platforms = new List<BasicPlatform>(p.ProjectPlatforms.Select(pp => new BasicPlatform(pp.Platform)));
             Technologies = new List<BasicTechnology>(p.ProjectTechnologies.Select(pt => new BasicTechnology(pt.Technology)));
+            Slug = p.Slug;
         }
 
         public int Id { get; set; }
@@ -34,6 +35,7 @@ namespace Portfolio.Shared.ViewModels
         public IList<BasicLanguage> Languages { get; set; }
         public IList<BasicPlatform> Platforms { get; set; }
         public IList<BasicTechnology> Technologies { get; set; }
+        public string Slug { get; set; }
     }
 }
 

@@ -41,19 +41,40 @@ namespace Portfolio.API.Controllers
             await repository.SaveProjectAsync(project);
         }
 
-        [HttpGet("projectdetails/{id}")]
-        public async Task<ProjectViewModel> GetProjectDetailsById(int id)
+        //[HttpGet("projectdetails/{id}")]
+        //public async Task<ProjectViewModel> GetProjectDetailsById(int id)
+        //{
+        //    var project = await repository.Projects
+        //        .Include(p => p.ProjectTechnologies)
+        //           .ThenInclude(pc => pc.Technology)
+        //        .Include(p => p.ProjectPlatforms)
+        //           .ThenInclude(pc => pc.Platform)
+        //       .Include(p => p.ProjectLanguages)
+        //           .ThenInclude(pc => pc.Language)
+        //        .FirstOrDefaultAsync(p => p.Id == id);
+
+        //    return new ProjectViewModel(project);
+        //}
+
+        [HttpGet("projectdetails/{slug}")]
+        public async Task<ProjectViewModel> GetProjectDetailsBySlug(string slug)
         {
-            var project = await repository.Projects
+            try
+            {
+                var project = await repository.Projects
                 .Include(p => p.ProjectTechnologies)
                    .ThenInclude(pc => pc.Technology)
                 .Include(p => p.ProjectPlatforms)
                    .ThenInclude(pc => pc.Platform)
                .Include(p => p.ProjectLanguages)
                    .ThenInclude(pc => pc.Language)
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            return new ProjectViewModel(project);
+                    .FirstOrDefaultAsync(p => p.Slug == slug);
+                return new ProjectViewModel(project);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpDelete("[action]/{id}")]

@@ -35,6 +35,12 @@ namespace PortfolioBlazorApp
             return await client.GetFromJsonAsync<ProjectViewModel>($"api/project/projectdetails/{id}");
         }
 
+        public async Task<ProjectViewModel> GetProjectBySlugAsync(string slug)
+        {
+            return await client.GetFromJsonAsync<ProjectViewModel>($"api/project/projectdetails/{slug}");
+        }
+
+
         public async Task AssignAsync(string categoryType, int projectId, string newName)
         {
             var assignBody = new AssignRequest
