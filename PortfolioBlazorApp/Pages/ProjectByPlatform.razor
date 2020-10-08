@@ -1,4 +1,4 @@
-﻿@page "/platform/{PlatformId:int}"
+﻿@page "/platform/{slug}"
 
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
@@ -15,6 +15,8 @@
 
 @code {[Parameter]
     public int PlatformId { get; set; }
+    [Parameter]
+    public string Slug { get; set; }
     public int Id { get; set; }
     private string platformName;
 
@@ -24,14 +26,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (PlatformId == 0)
+        if (PlatformId == 0 && Slug == null)
             return;
         await refreshAsync();
     }
 
     async Task refreshAsync()
     {
-        platforms = await http.GetFromJsonAsync<PlatformViewModel>($"/api/category/GetPlatformsWithProjectsById/{PlatformId}");
+        platforms = await http.GetFromJsonAsync<PlatformViewModel>($"/api/category/GetPlatformsWithProjectsBySlug/{Slug}");
 
 
         platformName = platforms.Name;

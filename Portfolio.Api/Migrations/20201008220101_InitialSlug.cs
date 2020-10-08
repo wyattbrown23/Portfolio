@@ -2,31 +2,30 @@
 
 namespace Portfolio.Api.Migrations
 {
-    public partial class SlugsAdded : Migration
+    public partial class InitialSlug : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "Slug",
-                table: "Projects",
+                table: "ProjectPlatforms",
                 nullable: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Projects_Slug",
-                table: "Projects",
-                column: "Slug",
-                unique: true);
+            migrationBuilder.AddColumn<string>(
+                name: "Slug",
+                table: "Platforms",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Projects_Slug",
-                table: "Projects");
+            migrationBuilder.DropColumn(
+                name: "Slug",
+                table: "ProjectPlatforms");
 
             migrationBuilder.DropColumn(
                 name: "Slug",
-                table: "Projects");
+                table: "Platforms");
         }
     }
 }

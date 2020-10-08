@@ -11,9 +11,11 @@ namespace Portfolio.Shared.ViewModels
         {
             Id = platform.Id;
             Name = platform.Name;
+            Slug = platform.Slug;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
     }
 }

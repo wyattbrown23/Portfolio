@@ -29,7 +29,13 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Languages");
                 });
@@ -42,6 +48,9 @@ namespace Portfolio.Api.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Slug")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -92,6 +101,9 @@ namespace Portfolio.Api.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LanguageId");
@@ -113,6 +125,9 @@ namespace Portfolio.Api.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

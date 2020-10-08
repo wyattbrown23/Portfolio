@@ -10,7 +10,7 @@
         @foreach (var l in languages)
         {
             <li>
-                <a href="./language/@l.Id"> @l.Name</a>
+                <a href="./language/@l.Slug"> @l.Name</a>
             </li>
         }
     </ul>
@@ -21,7 +21,7 @@
         @foreach (var p in platforms)
         {
             <li>
-                <a href="./platform/@p.Id"> @p.Name</a>
+                <a href="./platform/@p.Slug"> @p.Name</a>
             </li>
         }
     </ul>

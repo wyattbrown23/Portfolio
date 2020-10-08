@@ -1,4 +1,4 @@
-﻿@page "/language/{LanguageId:int}"
+﻿@page "/language/{slug}"
 
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
@@ -15,6 +15,9 @@
 
 @code {[Parameter]
     public int LanguageId { get; set; }
+    [Parameter]
+    public string Slug { get; set; }
+
     public int Id { get; set; }
     private string languageName;
 
@@ -24,14 +27,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (LanguageId == 0)
+        if (LanguageId == 0 && Slug == null)
             return;
         await refreshAsync();
     }
 
     async Task refreshAsync()
     {
-        languages = await http.GetFromJsonAsync<LanguageViewModel>($"/api/category/GetLangaugesWithProjectsById/{LanguageId}");
+        languages = await http.GetFromJsonAsync<LanguageViewModel>($"/api/category/GetLangaugesWithProjectsBySlug/{Slug}");
 
 
         languageName = languages.Name;

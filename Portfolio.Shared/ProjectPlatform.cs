@@ -7,5 +7,6 @@
         public Project Project { get; set; }
         public int PlatformId { get; set; }
         public Platform Platform { get; set; }
+        public string Slug { get; set; }
     }
 }

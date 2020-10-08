@@ -12,9 +12,11 @@ namespace Portfolio.Shared.ViewModels
         {
             Id = l.Id;
             Name = l.Name;
+            Slug = l.Slug;
         }
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
 
     }
 }

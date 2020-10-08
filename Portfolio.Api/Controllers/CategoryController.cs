@@ -55,26 +55,42 @@ namespace Portfolio.API.Controllers
         }
 
 
-        [HttpGet("[action]/{id}")]
-        public async Task<LanguageViewModel> GetLangaugesWithProjectsById(int id)
+        [HttpGet("[action]/{slug}")]
+        public async Task<LanguageViewModel> GetLangaugesWithProjectsBySlug(string slug)
         {
-            var language = await repository.Languages
+            try
+            {
+                var language = await repository.Languages
                 .Include(l => l.ProjectLanguages)
                     .ThenInclude(pl => pl.Project)
-                .FirstOrDefaultAsync(l => l.Id == id);
+                .FirstOrDefaultAsync(l => l.Slug == slug);
 
-            return new LanguageViewModel(language);
+                return new LanguageViewModel(language);
+            }
+            catch
+            {
+                throw;
+            }
+            
         }
 
-        [HttpGet("[action]/{id}")]
-        public async Task<PlatformViewModel> GetPlatformsWithProjectsById(int id)
+        [HttpGet("[action]/{slug}")]
+        public async Task<PlatformViewModel> GetPlatformsWithProjectsBySlug(string slug)
         {
-            var platform = await repository.Platforms
-                .Include(p => p.ProjectPlatforms)
-                    .ThenInclude(pp => pp.Project)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            try
+            {
+                var platform = await repository.Platforms
+               .Include(p => p.ProjectPlatforms)
+                   .ThenInclude(pp => pp.Project)
+               .FirstOrDefaultAsync(p => p.Slug == slug);
 
-            return new PlatformViewModel(platform);
+                return new PlatformViewModel(platform);
+            }
+            catch
+            {
+                throw;
+            }
+           
         }
 
         [HttpGet("[action]/{id}")]

@@ -10,7 +10,7 @@ using Portfolio.Api.Data;
 namespace Portfolio.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201001191553_Initial")]
+    [Migration("20201008200416_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,13 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Languages");
                 });
@@ -67,10 +73,16 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Requirements")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Projects");
                 });
@@ -87,6 +99,9 @@ namespace Portfolio.Api.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -159,7 +174,7 @@ namespace Portfolio.Api.Migrations
             modelBuilder.Entity("Portfolio.Shared.ProjectLanguage", b =>
                 {
                     b.HasOne("Portfolio.Shared.Language", "Language")
-                        .WithMany()
+                        .WithMany("ProjectLanguages")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -174,7 +189,7 @@ namespace Portfolio.Api.Migrations
             modelBuilder.Entity("Portfolio.Shared.ProjectPlatform", b =>
                 {
                     b.HasOne("Portfolio.Shared.Platform", "Platform")
-                        .WithMany()
+                        .WithMany("ProjectPlatforms")
                         .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -195,7 +210,7 @@ namespace Portfolio.Api.Migrations
                         .IsRequired();
 
                     b.HasOne("Portfolio.Shared.Technology", "Technology")
-                        .WithMany()
+                        .WithMany("ProjectTechnologies")
                         .HasForeignKey("TechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

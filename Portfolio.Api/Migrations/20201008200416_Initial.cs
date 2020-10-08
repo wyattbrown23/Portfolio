@@ -14,7 +14,8 @@ namespace Portfolio.Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +44,8 @@ namespace Portfolio.Api.Migrations
                     Title = table.Column<string>(nullable: true),
                     Requirements = table.Column<string>(nullable: true),
                     Design = table.Column<string>(nullable: true),
-                    CompletionDate = table.Column<DateTime>(nullable: false)
+                    CompletionDate = table.Column<DateTime>(nullable: false),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,7 +72,8 @@ namespace Portfolio.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProjectId = table.Column<int>(nullable: false),
-                    LanguageId = table.Column<int>(nullable: false)
+                    LanguageId = table.Column<int>(nullable: false),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,6 +145,12 @@ namespace Portfolio.Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Languages_Slug",
+                table: "Languages",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProjectLanguages_LanguageId",
                 table: "ProjectLanguages",
                 column: "LanguageId");
@@ -160,6 +169,12 @@ namespace Portfolio.Api.Migrations
                 name: "IX_ProjectPlatforms_ProjectId",
                 table: "ProjectPlatforms",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_Slug",
+                table: "Projects",
+                column: "Slug",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectTechnologies_ProjectId",
