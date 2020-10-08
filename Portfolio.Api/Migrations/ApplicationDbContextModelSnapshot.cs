@@ -55,6 +55,9 @@ namespace Portfolio.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
                     b.ToTable("Platforms");
                 });
 
@@ -148,6 +151,9 @@ namespace Portfolio.Api.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.Property<int>("TechnologyId")
                         .HasColumnType("integer");
 
@@ -170,7 +176,13 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Technologies");
                 });

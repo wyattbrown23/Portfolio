@@ -12,6 +12,7 @@ namespace Portfolio.Shared.ViewModels
         {
             Id = technology.Id;
             Name = technology.Name;
+            Slug = technology.Slug;
             Projects = technology.ProjectTechnologies
                         .Select(pt => new BasicProject(pt.Project))
                         .ToList();
@@ -19,6 +20,7 @@ namespace Portfolio.Shared.ViewModels
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
         public IList<BasicProject> Projects { get; set; }
     }
 }

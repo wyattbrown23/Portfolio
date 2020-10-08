@@ -54,7 +54,7 @@ namespace Portfolio.API.Data
                     if (technology == null)
                     {
                         technology = new Technology { Name = assignRequest.Name };
-                        //technology.Slug = technology.Name.ToSlug();
+                        technology.Slug = technology.Name.ToSlug();
                         context.Technologies.Add(technology);
                         await context.SaveChangesAsync();
                     }

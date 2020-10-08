@@ -93,15 +93,23 @@ namespace Portfolio.API.Controllers
            
         }
 
-        [HttpGet("[action]/{id}")]
-        public async Task<TechnologyViewModel> GetTechnologiesWithProjectsById(int id)
+        [HttpGet("[action]/{slug}")]
+        public async Task<TechnologyViewModel> GetTechnologiesWithProjectsBySlug(string slug)
         {
-            var technology = await repository.Technologies
+            try
+            {
+                var technology = await repository.Technologies
                 .Include(t => t.ProjectTechnologies)
                     .ThenInclude(pt => pt.Project)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .FirstOrDefaultAsync(t => t.Slug == slug);
 
-            return new TechnologyViewModel(technology);
+                return new TechnologyViewModel(technology);
+            }
+            catch
+            {
+                throw;
+            }
+            
         }
 
         [HttpGet("[action]")]

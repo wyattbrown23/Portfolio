@@ -28,7 +28,8 @@ namespace Portfolio.Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,7 +59,8 @@ namespace Portfolio.Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,7 +101,8 @@ namespace Portfolio.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProjectId = table.Column<int>(nullable: false),
-                    PlatformId = table.Column<int>(nullable: false)
+                    PlatformId = table.Column<int>(nullable: false),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,7 +128,8 @@ namespace Portfolio.Api.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProjectId = table.Column<int>(nullable: false),
-                    TechnologyId = table.Column<int>(nullable: false)
+                    TechnologyId = table.Column<int>(nullable: false),
+                    Slug = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -147,6 +151,12 @@ namespace Portfolio.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Languages_Slug",
                 table: "Languages",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Platforms_Slug",
+                table: "Platforms",
                 column: "Slug",
                 unique: true);
 
@@ -185,6 +195,12 @@ namespace Portfolio.Api.Migrations
                 name: "IX_ProjectTechnologies_TechnologyId",
                 table: "ProjectTechnologies",
                 column: "TechnologyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Technologies_Slug",
+                table: "Technologies",
+                column: "Slug",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

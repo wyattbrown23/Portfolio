@@ -10,7 +10,7 @@ using Portfolio.Api.Data;
 namespace Portfolio.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201008200416_Initial")]
+    [Migration("20201008222816_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,13 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Platforms");
                 });
@@ -125,6 +131,9 @@ namespace Portfolio.Api.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PlatformId");
@@ -143,6 +152,9 @@ namespace Portfolio.Api.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
 
                     b.Property<int>("TechnologyId")
                         .HasColumnType("integer");
@@ -166,7 +178,13 @@ namespace Portfolio.Api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Technologies");
                 });

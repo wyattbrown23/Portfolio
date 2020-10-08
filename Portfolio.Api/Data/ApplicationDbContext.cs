@@ -27,6 +27,10 @@ namespace Portfolio.Api.Data
             modelBuilder.Entity<Platform>()
                 .HasIndex(u => u.Slug)
                 .IsUnique();
+
+            modelBuilder.Entity<Technology>()
+                .HasIndex(u => u.Slug)
+                .IsUnique();
         }
 
         public DbSet<Project> Projects { get; set; }

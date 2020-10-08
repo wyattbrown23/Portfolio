@@ -1,4 +1,4 @@
-﻿@page "/technology/{TechnologyId:int}"
+﻿@page "/technology/{slug}"
 
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
@@ -15,6 +15,8 @@
 
 @code {[Parameter]
     public int TechnologyId { get; set; }
+    [Parameter]
+    public string Slug { get; set; }
     public int Id { get; set; }
     private string technologyName;
 
@@ -24,14 +26,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (TechnologyId == 0)
+        if (TechnologyId == 0 && Slug == null)
             return;
         await refreshAsync();
     }
 
     async Task refreshAsync()
     {
-        technologies = await http.GetFromJsonAsync<TechnologyViewModel>($"/api/category/GetTechnologiesWithProjectsById/{TechnologyId}");
+        technologies = await http.GetFromJsonAsync<TechnologyViewModel>($"/api/category/GetTechnologiesWithProjectsBySlug/{Slug}");
 
 
         technologyName = technologies.Name;
