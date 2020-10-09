@@ -21,19 +21,19 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Title</label>
                 <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@projectName</label>
+                    <label type="text" readonly class="form-control-plaintext"><MarkdownView Content="@projectName" /></label>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Project Requirement</label>
                 <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@projectRequirements</label>
+                    <label type="text" readonly class="form-control-plaintext"><MarkdownView Content="@projectRequirements" /></label>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Project Design</label>
                 <div class="col-sm-8">
-                    <label type="text" readonly class="form-control-plaintext">@projectDesign</label>
+                    <label type="text" readonly class="form-control-plaintext"><MarkdownView Content="@projectDesign" /></label>
                 </div>
             </div>
             <div class="form-group row">
@@ -87,7 +87,7 @@
 </div>
 <div class="form-group">
     <label asp-for="Body">Requirements: </label>
-    <input @bind-value="@projectRequirements" class="form-control" rows="4">
+    <textarea @bind="@projectRequirements" class="form-control" rows="4"/>
 </div>
 <div class="form-group">
     <label asp-for="Body">Design: </label>

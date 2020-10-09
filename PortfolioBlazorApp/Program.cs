@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Ganss.XSS;
 
 namespace PortfolioBlazorApp
 {
@@ -20,6 +21,15 @@ namespace PortfolioBlazorApp
             var baseAddress = builder.Configuration["Endpoint Base Address"];
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
             builder.Services.AddScoped<ProjectApiService>();
+
+            builder.Services.AddScoped<IHtmlSanitizer, HtmlSanitizer>(x =>
+            {
+                // Configure sanitizer rules as needed here.
+                // For now, just use default rules + allow class attributes
+                var sanitizer = new Ganss.XSS.HtmlSanitizer();
+                sanitizer.AllowedAttributes.Add("class");
+                return sanitizer;
+            });
 
             await builder.Build().RunAsync();
         }
