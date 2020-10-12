@@ -1,0 +1,35 @@
+﻿@inject HttpClient http
+@using Portfolio.Shared.ViewModels
+
+<h4>Platforms</h4>
+<ul>
+    @foreach (var p in platforms)
+    {
+        <li>
+            <a href="./platform/@p.Slug"> @p.Name</a>
+        </li>
+        <ul>
+            <h5>Projects</h5>
+
+            @foreach (var pp in p.Projects)
+            {
+                <li><a href="ProjectDetails/@pp.Slug">@pp.Title</a></li>
+            }
+        </ul>
+    }
+</ul>
+@code {
+    private IEnumerable<PlatformViewModel> platforms = new List<PlatformViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshCategoriesAsync();
+    }
+
+    private async Task RefreshCategoriesAsync()
+    {
+        platforms = await http.GetFromJsonAsync<IEnumerable<PlatformViewModel>>("/api/category/GetPlatformsWithProjects");
+    }
+
+
+}

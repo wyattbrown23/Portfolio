@@ -4,38 +4,12 @@
 @using Portfolio.Shared.ViewModels
 
 <div>
-    <h4>Technologies</h4>
-    <ul>
-        @foreach (var t in technologies)
-        {
-            <li>
-                <a href="./technology/@t.Slug"> @t.Name</a>
-            </li>
-            <ul>
-                <h5>Projects</h5>
-
-                @foreach (var pt in t.Projects)
-                {
-                    <li><a href="ProjectDetails/@pt.Slug">@pt.Title</a></li>
-                }
-            </ul>
-        }
-    </ul>
+    <TechnologyList/>
 </div>
 
 
 @code {
-    private IEnumerable<TechnologyViewModel> technologies = new List<TechnologyViewModel>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        await RefreshCategoriesAsync();
-    }
-
-    private async Task RefreshCategoriesAsync()
-    {
-        technologies = await http.GetFromJsonAsync<IEnumerable<TechnologyViewModel>>("/api/category/GetTechnologiesWithProjects");
-    }
 
 }
 

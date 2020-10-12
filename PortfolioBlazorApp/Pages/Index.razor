@@ -37,21 +37,8 @@
 
 
 <hr />
-<h3>List of Projects</h3>
-<ul>
-    @foreach (var p in projects)
-    {
-    <li>
-        <a href="ProjectDetails/@p.Slug"> @p.Title</a>
-        <button @onclick="(() => removeProject(p)) " class="btn btn-primary">Remove </button>
-    </li>
-}
-</ul>
 
-
-
-
-
+<ProjectList/>
 
 @code { private string newProjectName;
     private string newProjectRequirements;
@@ -77,22 +64,6 @@
         catch (Exception e)
         {
         }
-        await RefreshProjectsAsync();
-    }
-
-    private async Task removeProject(Project project)
-    {
-        await http.DeleteAsync($"/api/project/deleteproject/{project.Id}");
-        await RefreshProjectsAsync();
-    }
-
-    private async Task loadProjects()
-    {
-        var response = await http.GetStringAsync("/api/project/");
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
         await RefreshProjectsAsync();
     }
 

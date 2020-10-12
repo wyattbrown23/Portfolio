@@ -4,37 +4,11 @@
 @using Portfolio.Shared.ViewModels
 
 <div>
-    <h4>Languages</h4>
-    <ul>
-        @foreach (var l in languages)
-        {
-            <li>
-                <a href="./language/@l.Slug"> @l.Name</a>
-            </li>
-            <ul>
-                <h5>Projects</h5>
-
-                @foreach (var pl in l.Projects)
-                {
-                    <li><a href="ProjectDetails/@pl.Slug">@pl.Title</a></li>
-                }
-            </ul>
-        }
-    </ul>
+    <LanguageList/>
 </div>
 
 
 @code {
-    private IEnumerable<LanguageViewModel> languages = new List<LanguageViewModel>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        await RefreshCategoriesAsync();
-    }
-
-    private async Task RefreshCategoriesAsync()
-    {
-        languages = await http.GetFromJsonAsync<IEnumerable<LanguageViewModel>>("/api/category/GetLangaugesWithProjects");
-    }
+   
 
 }
