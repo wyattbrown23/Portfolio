@@ -1,23 +1,19 @@
 ﻿@inject HttpClient http
 @using Portfolio.Shared
 
-<h3>List of Projects</h3>
+<h3>My Projects</h3>
 <ul>
     @foreach (var p in projects)
     {
-    <li>
-        <a href="ProjectDetails/@p.Slug"> @p.Title</a>
-        <button @onclick="(() => removeProject(p)) " class="btn btn-primary">Remove </button>
-        <a href="ProjectDetails/Edit/@p.Slug">Edit</a>
-    </li>
-}
+<li>
+    <a href="ProjectDetails/@p.Slug"> @p.Title</a>
+</li>}
 </ul>
 
 @code { private IEnumerable<Project> projects = new List<Project>();
 
     private async Task removeProject(Project project)
     {
-        await http.DeleteAsync($"/api/project/deleteproject/{project.Id}");
         await RefreshProjectsAsync();
     }
 
@@ -30,5 +26,4 @@
     {
         await RefreshProjectsAsync();
     }
-
-    }
+}

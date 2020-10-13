@@ -1,0 +1,124 @@
+﻿@page "/projectdetails/edit/{slug}"
+
+@inject HttpClient http
+@inject PortfolioBlazorApp.ProjectApiService projectApi
+@using Portfolio.Shared
+@using Portfolio.Shared.ViewModels
+
+
+<h4>Edit Project</h4>
+
+<div class="form-group">
+    <label asp-for="Title">Project Title:</label>
+    <input @bind-value="@projectName" class="form-control" />
+</div>
+<div class="form-group">
+    <label asp-for="Body">Requirements: </label>
+    <textarea @bind="@projectRequirements" class="form-control" rows="4" />
+</div>
+<div class="form-group">
+    <label asp-for="Body">Design: </label>
+    <input @bind-value="@projectDesign" class="form-control" rows="4">
+</div>
+<div class="form-group">
+    <label asp-for="Body">Completion Date: </label>
+    <input @bind-value="projectCompletionDate" type="date" />
+</div>
+<button @onclick="updateProject">save</button>
+
+
+
+
+@code { [Parameter]
+    public int ProjectId { get; set; }
+    [Parameter]
+    public string Slug { get; set; }
+
+    public int Id { get; set; }
+    string newLanguage;
+    string newPlatform;
+    string newTechnology;
+
+
+
+    private string projectName;
+    private string projectRequirements;
+    private string projectDesign;
+    private DateTime projectCompletionDate;
+
+
+
+    public ProjectViewModel SelectedProject { get; set; } = new ProjectViewModel();
+    public Project project { get; set; } = new Project();
+
+    public IEnumerable<BasicLanguage> LanguageList = new List<BasicLanguage>();
+    public IEnumerable<BasicPlatform> PlatformList = new List<BasicPlatform>();
+    public IEnumerable<BasicTechnology> TechnologyList = new List<BasicTechnology>();
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ProjectId == 0 && Slug == null)
+            return;
+        await refreshAsync();
+    }
+
+
+
+    private async Task updateProject()
+    {
+        var project = new Project
+        {
+            Id = ProjectId,
+            Title = projectName,
+            Requirements = projectRequirements,
+            Design = projectDesign,
+            CompletionDate = projectCompletionDate
+        };
+        try
+        {
+            var response = await http.PostAsJsonAsync("/api/project/update", project);
+        }
+        catch (Exception e)
+        {
+        }
+    }
+
+
+
+    async Task refreshAsync()
+    {
+        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
+
+        ProjectId = SelectedProject.Id;
+        projectName = SelectedProject.Title;
+        projectRequirements = SelectedProject.Requirements;
+        projectDesign = SelectedProject.Design;
+        projectCompletionDate = SelectedProject.CompletionDate;
+
+        LanguageList = SelectedProject.Languages;
+        PlatformList = SelectedProject.Platforms;
+        TechnologyList = SelectedProject.Technologies;
+    }
+
+
+
+    private async Task assignLanguage()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.LanguageCategory, SelectedProject.Id, newLanguage);
+        await refreshAsync();
+    }
+
+    private async Task assignPlatform()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.PlatformCategory, SelectedProject.Id, newPlatform);
+        await refreshAsync();
+    }
+
+    private async Task assignTechnology()
+    {
+        await projectApi.AssignAsync(Portfolio.Shared.Project.TechnologyCategory, SelectedProject.Id, newTechnology);
+        await refreshAsync();
+    } }

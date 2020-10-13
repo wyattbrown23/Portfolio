@@ -13,12 +13,6 @@
     <div class="col-10 row">
         <div class="col-xs-12 col-sm-8">
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Project ID</label>
-                <div class="col-sm-8">
-                    <label type="text" class="form-control-plaintext">@ProjectId</label>
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Title</label>
                 <div class="col-sm-8">
                     <label type="text" readonly class="form-control-plaintext"><MarkdownView Content="@projectName" /></label>
@@ -78,29 +72,6 @@
 </div>
 
 
-<hr />
-<h4>Edit Project</h4>
-
-<div class="form-group">
-    <label asp-for="Title">Project Title:</label>
-    <input @bind-value="@projectName" class="form-control" />
-</div>
-<div class="form-group">
-    <label asp-for="Body">Requirements: </label>
-    <textarea @bind="@projectRequirements" class="form-control" rows="4"/>
-</div>
-<div class="form-group">
-    <label asp-for="Body">Design: </label>
-    <input @bind-value="@projectDesign" class="form-control" rows="4">
-</div>
-<div class="form-group">
-    <label asp-for="Body">Completion Date: </label>
-    <input @bind-value="projectCompletionDate" type="date" />
-</div>
-<button @onclick="updateProject">save</button>
-
-
-
 
 @code { [Parameter]
     public int ProjectId { get; set; }
@@ -137,29 +108,6 @@
             return;
         await refreshAsync();
     }
-
-
-
-    private async Task updateProject()
-    {
-        var project = new Project
-        {
-            Id = ProjectId,
-            Title = projectName,
-            Requirements = projectRequirements,
-            Design = projectDesign,
-            CompletionDate = projectCompletionDate
-        };
-        try
-        {
-            var response = await http.PostAsJsonAsync("/api/project/update", project);
-        }
-        catch (Exception e)
-        {
-        }
-    }
-
-
 
     async Task refreshAsync()
     {
