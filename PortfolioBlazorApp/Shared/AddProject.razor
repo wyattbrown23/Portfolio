@@ -1,0 +1,54 @@
+﻿@inject HttpClient http
+@using Portfolio.Shared
+
+<div class="m-2">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="Title">Project Title:</label>
+        <input @bind-value="newProjectName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Body">Requirements: </label>
+        <textarea @bind="newProjectRequirements" class="form-control" rows="4" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Body">Design: </label>
+        <input @bind-value="newProjectDesign" class="form-control" rows="4">
+    </div>
+    <div class="form-group">
+        <label asp-for="Body">Completion Date: </label>
+        <input @bind-value="newProjectCompletionDate" type="date" />
+    </div>
+    <div>
+    </div>
+    <button @onclick="addProject" class="btn btn-primary">Add Project</button>
+</div>
+
+@code { private string newProjectName;
+    private string newProjectRequirements;
+    private string newProjectDesign;
+    private DateTime newProjectCompletionDate;
+
+    [Parameter]
+    public EventCallback<Project> OnAddProject { get; set; }
+
+    private async Task addProject()
+    {
+        var project = new Project
+        {
+            Title = newProjectName,
+            Requirements = newProjectRequirements,
+            Design = newProjectDesign,
+            CompletionDate = newProjectCompletionDate
+
+
+        };
+        try
+        {
+            var response = await http.PostAsJsonAsync("/api/project/", project);
+        }
+        catch (Exception e)
+        {
+        }
+        await OnAddProject.InvokeAsync(project);
+    } }

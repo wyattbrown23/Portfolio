@@ -1,6 +1,8 @@
 ﻿@inject HttpClient http
 @using Portfolio.Shared
 
+<AddProject OnAddProject="ProjectAdded" />
+
 <h3>List of Projects</h3>
 <ul>
     @foreach (var p in projects)
@@ -13,7 +15,7 @@
 }
 </ul>
 
-@code { private IEnumerable<Project> projects = new List<Project>();
+@code { private IList<Project> projects = new List<Project>();
 
     private async Task removeProject(Project project)
     {
@@ -23,7 +25,7 @@
 
     private async Task RefreshProjectsAsync()
     {
-        projects = await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/");
+        projects = (await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/")).ToList();
     }
 
     protected override async Task OnInitializedAsync()
@@ -31,4 +33,8 @@
         await RefreshProjectsAsync();
     }
 
+    private void ProjectAdded(Project project)
+    {
+        projects.Add(project);
     }
+}
