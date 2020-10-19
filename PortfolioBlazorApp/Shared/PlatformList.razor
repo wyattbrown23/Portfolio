@@ -1,12 +1,14 @@
 ﻿@inject HttpClient http
 @using Portfolio.Shared.ViewModels
 
-<h4>Platforms</h4>
+<h1>Platforms</h1>
 <ul>
     @foreach (var p in platforms)
     {
         <li>
-            <a href="./platform/@p.Slug"> @p.Name</a>
+            <h2>
+                <a href="./platform/@p.Slug"> @p.Name</a>
+            </h2>
         </li>
         <ul>
             <h5>Projects</h5>

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Portfolio.Api.Data;
 using Portfolio.API.Data;
 
@@ -41,6 +42,10 @@ namespace Portfolio.Api
                                .AllowAnyHeader();
                     });
             });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Rsvp App", Version = "v1" });
+            });
         }
 
 
@@ -61,6 +66,12 @@ namespace Portfolio.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
         }
 
