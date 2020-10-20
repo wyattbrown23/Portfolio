@@ -111,7 +111,8 @@
 
     async Task refreshAsync()
     {
-        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
+        //SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
+        SelectedProject = await projectApi.GetProjectBySlugAsync(Slug);
 
         ProjectId = SelectedProject.Id;
         projectName = SelectedProject.Title;

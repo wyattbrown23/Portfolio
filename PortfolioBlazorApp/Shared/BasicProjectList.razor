@@ -1,4 +1,5 @@
 ﻿@inject HttpClient http
+@inject PortfolioBlazorApp.ProjectApiService projectApi
 @using Portfolio.Shared
 
 <h3>My Projects</h3>
@@ -7,7 +8,8 @@
     {
 <li>
     <a href="ProjectDetails/@p.Slug"> @p.Title</a>
-</li>}
+</li>
+}
 </ul>
 
 @code { private IEnumerable<Project> projects = new List<Project>();
@@ -19,11 +21,10 @@
 
     private async Task RefreshProjectsAsync()
     {
-        projects = await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/");
+        projects = projects = await projectApi.GetProjectsAsync();
     }
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshProjectsAsync();
-    }
-}
+    } }

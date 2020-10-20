@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Ganss.XSS;
+using Polly.Extensions.Http;
+using Polly;
 
 namespace PortfolioBlazorApp
 {
@@ -20,7 +22,7 @@ namespace PortfolioBlazorApp
 
             var baseAddress = builder.Configuration["Endpoint Base Address"];
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
-            builder.Services.AddScoped<ProjectApiService>();
+            //builder.Services.AddScoped<ProjectApiService>();
 
             builder.Services.AddScoped<IHtmlSanitizer, HtmlSanitizer>(x =>
             {
@@ -31,7 +33,24 @@ namespace PortfolioBlazorApp
                 return sanitizer;
             });
 
+            builder.Services.AddHttpClient<ProjectApiService>(b => b.BaseAddress = new Uri(baseAddress))
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+                .AddPolicyHandler(GetRetryPolicy());
+
             await builder.Build().RunAsync();
+        }
+
+        static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            Random jitterer = new Random();
+            var retryWithJitterPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
+                .WaitAndRetryAsync(6,    // exponential back-off plus some jitter
+                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                                  + TimeSpan.FromMilliseconds(jitterer.Next(0, 100))
+                );
+            return retryWithJitterPolicy;
         }
     }
 }

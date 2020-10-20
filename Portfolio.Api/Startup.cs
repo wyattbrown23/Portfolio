@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Polly;
+using Polly.Extensions.Http;
 using Portfolio.Api.Data;
 using Portfolio.API.Data;
 
@@ -46,6 +49,8 @@ namespace Portfolio.Api
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Rsvp App", Version = "v1" });
             });
+
+            
         }
 
 
@@ -74,6 +79,8 @@ namespace Portfolio.Api
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
         }
+
+       
 
         private static string convertUrlConnectionString(string url)
         {

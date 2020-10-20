@@ -1,6 +1,6 @@
 ﻿@inject HttpClient http
 @using Portfolio.Shared
-
+@inject PortfolioBlazorApp.ProjectApiService projectApi
 
 <AddProject OnAddProject="ProjectAdded" />
 
@@ -8,12 +8,11 @@
 <ul>
     @foreach (var p in projects)
     {
-    <li>
-        <a href="ProjectDetails/@p.Slug"> @p.Title</a>
-        <button @onclick="(() => removeProject(p)) " class="btn btn-primary">Remove </button>
-        <a href="ProjectDetails/Edit/@p.Slug">Edit</a>
-    </li>
-}
+<li>
+    <a href="ProjectDetails/@p.Slug"> @p.Title</a>
+    <button @onclick="(() => removeProject(p)) " class="btn btn-primary">Remove </button>
+    <a href="ProjectDetails/Edit/@p.Slug">Edit</a>
+</li>}
 </ul>
 
 @code { private IList<Project> projects = new List<Project>();
@@ -26,7 +25,8 @@
 
     private async Task RefreshProjectsAsync()
     {
-        projects = (await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/")).ToList();
+        //projects = (await http.GetFromJsonAsync<IEnumerable<Project>>("/api/project/")).ToList();
+        projects =  await projectApi.GetProjectsAsync();
     }
 
     protected override async Task OnInitializedAsync()
@@ -37,5 +37,4 @@
     private void ProjectAdded(Project project)
     {
         projects.Add(project);
-    }
-}
+    } }

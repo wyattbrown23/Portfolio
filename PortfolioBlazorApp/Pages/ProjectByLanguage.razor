@@ -1,5 +1,5 @@
 ﻿@page "/language/{slug}"
-
+@inject PortfolioBlazorApp.ProjectApiService projectApi
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 @using Portfolio.Shared
@@ -34,7 +34,8 @@
 
     async Task refreshAsync()
     {
-        languages = await http.GetFromJsonAsync<LanguageViewModel>($"/api/category/GetLangaugesWithProjectsBySlug/{Slug}");
+        //languages = await http.GetFromJsonAsync<LanguageViewModel>($"/api/category/GetLangaugesWithProjectsBySlug/{Slug}");
+        languages = await projectApi.GetLangaugesWithProjectsBySlug(Slug);
 
 
         languageName = languages.Name;

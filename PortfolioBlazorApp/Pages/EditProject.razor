@@ -79,7 +79,8 @@
         };
         try
         {
-            var response = await http.PostAsJsonAsync("/api/project/update", project);
+            //var response = await http.PostAsJsonAsync("/api/project/update", project);
+            await projectApi.UpdateProjectDetails(project);
         }
         catch (Exception e)
         {
@@ -90,7 +91,7 @@
 
     async Task refreshAsync()
     {
-        SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
+        SelectedProject = await projectApi.GetProjectBySlugAsync(Slug);
 
         ProjectId = SelectedProject.Id;
         projectName = SelectedProject.Title;
