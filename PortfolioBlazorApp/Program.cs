@@ -37,6 +37,13 @@ namespace PortfolioBlazorApp
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
                 .AddPolicyHandler(GetRetryPolicy());
 
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
+                options.ProviderOptions.DefaultScopes.Add("https://schemas.dev-k1t7wt86.com/roles");
+            });
+
             await builder.Build().RunAsync();
         }
 

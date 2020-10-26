@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,22 @@ namespace Portfolio.Api
                                .AllowAnyHeader();
                     });
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = $"{Configuration["Auth0:Authority"]}";
+                options.Audience = $"{Configuration["Auth0:ApiIdentifier"]}";
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    NameClaimType = "Roles",
+                    RoleClaimType = "https://schemas.dev-k1t7wt86.com/roles"
+                };
+            });
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Rsvp App", Version = "v1" });
@@ -65,6 +82,7 @@ namespace Portfolio.Api
             app.UseRouting();
 
             app.UseCors();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

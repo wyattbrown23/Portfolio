@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
@@ -12,6 +13,7 @@ namespace Portfolio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ProjectController : ControllerBase
     {
         private readonly IRepository repository;
@@ -36,6 +38,7 @@ namespace Portfolio.API.Controllers
         } 
 
         [HttpPost()]
+        [Authorize(Roles = "Admin")]
         public async Task Post(ProjectViewModel project)
         {
             await repository.SaveProjectAsync(project);
@@ -78,18 +81,21 @@ namespace Portfolio.API.Controllers
         }
 
         [HttpDelete("[action]/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task DeleteProject(int id)
         {
             await repository.DeleteProjectAsync(id);
         }
 
         [HttpPost("Update")]
+        [Authorize(Roles = "Admin")]
         public async Task UpdateProjectDetails(ProjectViewModel project)
         {
             await repository.UpdateProjectDetailsAsync(project);
         }
 
         [HttpPost("[action]")]
+        [Authorize(Roles = "Admin")]
         public async Task Assign(AssignRequest assignRequest)
         {
             await repository.AssignCategoryAsync(assignRequest);
