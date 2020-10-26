@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Ganss.XSS;
 using Polly.Extensions.Http;
 using Polly;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Components;
 
 namespace PortfolioBlazorApp
 {
@@ -33,7 +35,9 @@ namespace PortfolioBlazorApp
                 return sanitizer;
             });
 
+            builder.Services.AddScoped<Auth0AuthorizationMessageHandler>();
             builder.Services.AddHttpClient<ProjectApiService>(b => b.BaseAddress = new Uri(baseAddress))
+                .AddHttpMessageHandler<Auth0AuthorizationMessageHandler>()
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
                 .AddPolicyHandler(GetRetryPolicy());
 
@@ -60,5 +64,14 @@ namespace PortfolioBlazorApp
             return retryWithJitterPolicy;
         }
     }
+
+    public class Auth0AuthorizationMessageHandler : AuthorizationMessageHandler 
+    { 
+        public Auth0AuthorizationMessageHandler(IAccessTokenProvider provider, NavigationManager navigationManager, IConfiguration config) 
+            : base(provider, navigationManager) 
+        {
+            this.ConfigureHandler(authorizedUrls: new[] { config["Endpoint Base Address"], "https://localhost:5001", " https://myportfolio-wyattb.herokuapp.com/" });
+        }
+    } //"https://portfolio-snow-jallen.herokuapp.com/", "https://portfolio2.snow.edu" }); } }
 }
 //http://localhost:5005
