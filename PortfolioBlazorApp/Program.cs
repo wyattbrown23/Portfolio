@@ -70,7 +70,7 @@ namespace PortfolioBlazorApp
         public Auth0AuthorizationMessageHandler(IAccessTokenProvider provider, NavigationManager navigationManager, IConfiguration config) 
             : base(provider, navigationManager) 
         {
-            this.ConfigureHandler(authorizedUrls: new[] { config["Endpoint Base Address"], "https://localhost:5001", " https://wyattbrown23.github.io/Portfolio/" });
+            this.ConfigureHandler(authorizedUrls: new[] { config["Endpoint Base Address"], "https://localhost:5001", "https://wyattbrown23.github.io/Portfolio/" });
         }
     } //"https://portfolio-snow-jallen.herokuapp.com/", "https://portfolio2.snow.edu" }); } }
 }
