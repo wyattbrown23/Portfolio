@@ -53,8 +53,8 @@ namespace Portfolio.Api
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = $"{Configuration["Auth0:Authority"]}";
-                options.Audience = $"{Configuration["Auth0:ApiIdentifier"]}";
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     NameClaimType = "Roles",
