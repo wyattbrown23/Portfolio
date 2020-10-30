@@ -1,5 +1,6 @@
 ﻿@inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @using Portfolio.Shared.ViewModels
 
 <h1>Technologies</h1>
@@ -32,7 +33,7 @@
 
     private async Task RefreshCategoriesAsync()
     {
-        technologies = await projectApi.GetTechnologiesWithProjects();
+        technologies = await publicProjectApi.GetTechnologiesWithProjects();
     }
 
 }

@@ -1,6 +1,9 @@
 ﻿
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+
 @using Portfolio.Shared
+
+
 
 <div class="m-2">
     <div asp-validation-summary="All"></div>
@@ -25,6 +28,10 @@
     <button @onclick="addProject" class="btn btn-primary">Add Project</button>
 </div>
 
+
+
+
+
 @code { private string newProjectName;
     private string newProjectRequirements;
     private string newProjectDesign;
@@ -32,6 +39,7 @@
 
     [Parameter]
     public EventCallback<Project> OnAddProject { get; set; }
+  
 
     private async Task addProject()
     {
@@ -47,7 +55,7 @@
         try
         {
             //var response = await http.PostAsJsonAsync("/api/project/", project);
-           await projectApi.SaveProjectAsync(project);
+            await projectApi.SaveProjectAsync(project);
         }
         catch (Exception e)
         {

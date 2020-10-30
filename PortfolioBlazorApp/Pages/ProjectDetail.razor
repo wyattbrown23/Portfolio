@@ -1,6 +1,7 @@
 ﻿@page "/projectdetails/{slug}"
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @using Portfolio.Shared
 @using Portfolio.Shared.ViewModels
 
@@ -112,7 +113,7 @@
     async Task refreshAsync()
     {
         //SelectedProject = (await http.GetFromJsonAsync<ProjectViewModel>($"/api/project/projectdetails/{Slug}"));
-        SelectedProject = await projectApi.GetProjectBySlugAsync(Slug);
+        SelectedProject = await publicProjectApi.GetProjectBySlugAsync(Slug);
 
         ProjectId = SelectedProject.Id;
         projectName = SelectedProject.Title;

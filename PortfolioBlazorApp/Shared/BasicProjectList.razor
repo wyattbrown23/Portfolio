@@ -1,5 +1,6 @@
 ﻿@inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @using Portfolio.Shared
 
 <h3>My Projects</h3>
@@ -21,7 +22,7 @@
 
     private async Task RefreshProjectsAsync()
     {
-        projects = projects = await projectApi.GetProjectsAsync();
+        projects = projects = await publicProjectApi.GetProjectsAsync();
     }
 
     protected override async Task OnInitializedAsync()

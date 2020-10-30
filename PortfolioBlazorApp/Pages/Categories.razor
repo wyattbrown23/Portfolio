@@ -2,6 +2,7 @@
 
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @using Portfolio.Shared.ViewModels
 
 <h3>Categories</h3>
@@ -59,9 +60,9 @@
         //platforms = await http.GetFromJsonAsync<IEnumerable<PlatformViewModel>>("/api/category/GetPlatforms");
         //technologies = await http.GetFromJsonAsync<IEnumerable<TechnologyViewModel>>("/api/category/GetTechnologies");
 
-        languages = await projectApi.GetLanguages();
-        platforms = await projectApi.GetPlatforms();
-        technologies = await projectApi.GetTechnologies();
+        languages = await publicProjectApi.GetLanguages();
+        platforms = await publicProjectApi.GetPlatforms();
+        technologies = await publicProjectApi.GetTechnologies();
     }
 
 

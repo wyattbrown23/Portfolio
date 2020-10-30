@@ -1,5 +1,6 @@
 ﻿@page "/platform/{slug}"
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 @using Portfolio.Shared
@@ -33,7 +34,7 @@
 
     async Task refreshAsync()
     {
-        platforms = await projectApi.GetPlatformsWithProjectsBySlug(Slug);
+        platforms = await publicProjectApi.GetPlatformsWithProjectsBySlug(Slug);
 
 
         platformName = platforms.Name;

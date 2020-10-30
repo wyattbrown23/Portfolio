@@ -1,9 +1,9 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider authStateProvider
+
 @using Portfolio.Shared
 
-@if (isAdmin)
-{
+
+
     <header>
     <h1 class="page-title">My Personal Projects</h1>
     <br />
@@ -11,25 +11,12 @@
 
 <hr />
 
+
+
+    
 <ProjectList />
-}
-else
-{
-    <h3>Still not an admin. :(</h3>
-
-}
 
 
 
-@code { bool isAdmin;
 
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await authStateProvider.GetAuthenticationStateAsync();
-        var roles = from c in authState.User.Claims
-                    where c.Type == "https://schemas.dev-k1t7wt86.com/roles"
-                    select c.Value;
-        isAdmin = roles.Any(r => r.Contains("Admin"));
-    } }
+@code {  }

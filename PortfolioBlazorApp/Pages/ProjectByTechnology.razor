@@ -1,5 +1,6 @@
 ﻿@page "/technology/{slug}"
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @inject HttpClient http
 @using Portfolio.Shared.ViewModels
 @using Portfolio.Shared
@@ -33,7 +34,7 @@
 
     async Task refreshAsync()
     {
-        technologies = await projectApi.GetTechnologiesWithProjectsBySlug(Slug);
+        technologies = await publicProjectApi.GetTechnologiesWithProjectsBySlug(Slug);
 
 
         technologyName = technologies.Name;

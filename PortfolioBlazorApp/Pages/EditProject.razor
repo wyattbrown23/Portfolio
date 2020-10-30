@@ -2,6 +2,7 @@
 @inject AuthenticationStateProvider authStateProvider
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
+@inject PortfolioBlazorApp.PublicProjectApiService publicProjectApi
 @using Portfolio.Shared
 @using Portfolio.Shared.ViewModels
 
@@ -105,7 +106,7 @@ else
 
     async Task refreshAsync()
     {
-        SelectedProject = await projectApi.GetProjectBySlugAsync(Slug);
+        SelectedProject = await publicProjectApi.GetProjectBySlugAsync(Slug);
 
         ProjectId = SelectedProject.Id;
         projectName = SelectedProject.Title;
