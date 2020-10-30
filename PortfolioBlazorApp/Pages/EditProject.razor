@@ -1,5 +1,5 @@
 ﻿@page "/projectdetails/edit/{slug}"
-@attribute [Authorize]
+@attribute [Authorize(Roles ="Admin")]
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
 @using Portfolio.Shared
