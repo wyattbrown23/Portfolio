@@ -1,11 +1,13 @@
 ﻿@page "/projectdetails/edit/{slug}"
-@attribute [Authorize()]
+@inject AuthenticationStateProvider authStateProvider
 @inject HttpClient http
 @inject PortfolioBlazorApp.ProjectApiService projectApi
 @using Portfolio.Shared
 @using Portfolio.Shared.ViewModels
 
 
+@if (isAdmin)
+{
 <h4>Edit Project</h4>
 
 <div class="form-group">
@@ -25,6 +27,12 @@
     <input @bind-value="projectCompletionDate" type="date" />
 </div>
 <button @onclick="updateProject">save</button>
+
+}
+else
+{
+<h3>Still not an admin. :(</h3>}
+
 
 
 
@@ -57,12 +65,18 @@
 
 
 
-
+    bool isAdmin;
     protected override async Task OnInitializedAsync()
     {
         if (ProjectId == 0 && Slug == null)
             return;
         await refreshAsync();
+
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var roles = from c in authState.User.Claims
+                    where c.Type == "https://schemas.dev-k1t7wt86.com/roles"
+                    select c.Value;
+        isAdmin = roles.Any(r => r.Contains("Admin"));
     }
 
 
