@@ -1,10 +1,31 @@
 ﻿@page "/resume"
-@attribute [Authorize(Roles ="Admin")]
 
-<h3>Resume</h3>
+@inject AuthenticationStateProvider authStateProvider
 
-<embed src="images/Wyatt_Brown_Resume_LinkedIn.pdf" width="100%" height="800" />
+@if (isAdmin)
+{
+    <h3>Resume</h3>
+
+    <embed src="images/Wyatt_Brown_Resume_LinkedIn.pdf" width="100%" height="800" />
+ }
+else
+{
+    <h3>Still not an admin. :(</h3>}
+
+
 
 @code {
+    bool isAdmin;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var roles = from c in authState.User.Claims
+                    where c.Type == "https://schemas.dev-k1t7wt86.com/roles"
+                    select c.Value;
+        isAdmin = roles.Any(r => r.Contains("Admin"));
+    } }
 
 }
