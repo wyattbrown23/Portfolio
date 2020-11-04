@@ -9,6 +9,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioBlazorApp", "Portf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portfolio.Shared", "Portfolio.Shared\Portfolio.Shared.csproj", "{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "portfolio.react", "portfolio.react\", "{86018BE6-7BE5-45BE-9BAD-F9E87A136615}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57727"
+		Debug.AspNetCompiler.PhysicalPath = "portfolio.react\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57727\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57727"
+		Release.AspNetCompiler.PhysicalPath = "portfolio.react\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57727\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57727"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +47,10 @@ Global
 		{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9E0A229-B151-4FAC-8369-1D5EF495EEB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86018BE6-7BE5-45BE-9BAD-F9E87A136615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86018BE6-7BE5-45BE-9BAD-F9E87A136615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86018BE6-7BE5-45BE-9BAD-F9E87A136615}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{86018BE6-7BE5-45BE-9BAD-F9E87A136615}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
