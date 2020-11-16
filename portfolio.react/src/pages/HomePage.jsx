@@ -5,6 +5,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h3>Welcome to my Portfolio</h3>
+                <a href="/projectlist"> Project List</a>
             </div>
         
             );
