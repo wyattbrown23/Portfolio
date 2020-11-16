@@ -4,6 +4,7 @@ import { Button, Layout, Table } from "antd";
 import "antd/dist/antd.css";
 import AddProjectModal from "../components/AddProjectModal";
 import SideBar from "../components/SideBar";
+import PageHeader from "../components/PageHeader";
 import { render } from "@testing-library/react";
 
 const { Header, Content } = Layout;
@@ -58,7 +59,7 @@ class ProjectListPage extends React.Component {
     render() {
         return (
             <Layout style={{ minHeight: "100vh" }}>
-                <Header />
+                <PageHeader />
                 <Layout>
                     <SideBar />
                     <Content>
