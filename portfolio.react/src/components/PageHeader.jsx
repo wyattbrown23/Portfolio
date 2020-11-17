@@ -3,7 +3,7 @@ import { Layout, Menu } from 'antd';
 import { Auth0Provider } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-import Profile from "./Profile";
+
 
 
 
@@ -19,7 +19,7 @@ class PageHeader extends React.Component {
                     redirectUri={window.location.origin}
                 >
                     
-                    <Profile />
+                    
                     <LoginButton />
                     <LogoutButton />
                     
