@@ -42,7 +42,7 @@ class TechnologyPage extends React.Component {
                                     {object.name}
                                     {object.projects.map(project => (
                                         <ul key={project.id}>
-                                            {project.title}
+                                            <a href={["/project?slug="] + project.slug}>{project.title}</a>
                                         </ul>
                                     ))}
                                 </li>

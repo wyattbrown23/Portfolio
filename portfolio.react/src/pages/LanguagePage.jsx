@@ -41,8 +41,8 @@ class LanguagePage extends React.Component {
                                 <li key={object.id}>
                                     {object.name}
                                     {object.projects.map(project => (
-                                        <ul key={project.id}>
-                                            {project.title}
+                                        <ul key={project.slug}>
+                                            <a href={["/project?slug="] + project.slug}>{project.title}</a>
                                         </ul>
                                         ))}
                                 </li>
