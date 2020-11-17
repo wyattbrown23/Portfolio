@@ -18,11 +18,11 @@ class SideBar extends React.Component {
                         <Profile />
                     </Auth0Provider>
                     <Menu style={{ color: "blue", backgroundColor: "lightblue" }}>
-                        <Menu.Item style={{ borderStyle: "solid" }}><a href="/" >Home</a></Menu.Item>
-                        <Menu.Item style={{ borderStyle: "solid"}}><a href="/projectlist" >Project List</a></Menu.Item>
-                        <Menu.Item style={{ borderStyle: "solid" }}><a href="/languages">Languages</a></Menu.Item>
-                        <Menu.Item style={{ borderStyle: "solid" }}><a href="/platforms"> Platforms</a></Menu.Item>
-                        <Menu.Item style={{ borderStyle: "solid" }}><a href="/technologies">Technologies</a></Menu.Item>
+                        <Menu.Item style={{ borderStyle: "solid", borderWidth: "1px" }}><a href="/" >Home</a></Menu.Item>
+                        <Menu.Item style={{ borderStyle: "solid", borderWidth: "1px"}}><a href="/projectlist" >Project List</a></Menu.Item>
+                        <Menu.Item style={{ borderStyle: "solid", borderWidth: "1px" }}><a href="/languages">Languages</a></Menu.Item>
+                        <Menu.Item style={{ borderStyle: "solid", borderWidth: "1px" }}><a href="/platforms"> Platforms</a></Menu.Item>
+                        <Menu.Item style={{ borderStyle: "solid", borderWidth: "1px" }}><a href="/technologies">Technologies</a></Menu.Item>
                     </Menu>
                 </Sider>
             </>
