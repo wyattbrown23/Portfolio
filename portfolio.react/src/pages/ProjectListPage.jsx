@@ -70,7 +70,7 @@ class ProjectListPage extends React.Component {
                             Add New
                         </Button>
                         <div>
-                            <Table dataSource={this.state.projects} columns={columns} />
+                            <Table rowKey="id" dataSource={this.state.projects} columns={columns} />
                         </div>
                         <AddProjectModal
                             visible={this.state.addModalVisability}

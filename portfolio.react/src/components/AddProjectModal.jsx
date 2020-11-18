@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import Modal from "antd/lib/modal/Modal";
 import { Input, DatePicker } from "antd";
 import axios from "axios";
+import moment from "moment";
 
 class AddProjectModal extends React.Component {
     state = {
@@ -34,6 +35,7 @@ class AddProjectModal extends React.Component {
 
     render() {
         const { projectName, projectRequirements, projectDesign, projectCompletionDate } = this.state;
+        const dateFormat = "M-D-YYYY";
         return (
             <div>
                 <Modal
@@ -45,7 +47,15 @@ class AddProjectModal extends React.Component {
                         <Input value={projectName} name="projectName" onChange={this.handleChange} placeholder="Project Name"></Input>
                         <Input value={projectRequirements} name="projectRequirements" onChange={this.handleChange} placeholder="Project Requirements"></Input>
                         <Input value={projectDesign} name="projectDesign" onChange={this.handleChange} placeholder="Project Design"></Input>
-                        <DatePicker value={projectCompletionDate} name="projectCompletionDate" onChange={this.handleChange.toString}></DatePicker>
+                        <DatePicker value={
+                            projectCompletionDate === ""
+                                ? ""
+                                : moment(projectCompletionDate, dateFormat)
+                        }
+                            format={dateFormat}
+                            onChange={(date, dateString) => {
+                                this.setState({ projectCompletionDate: dateString });
+                            }}></DatePicker>
                     </form>
                 </Modal>
             </div>
