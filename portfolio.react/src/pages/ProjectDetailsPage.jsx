@@ -52,9 +52,6 @@ class ProjectDetailsPage extends React.Component {
                                 <Descriptions.Item label="Design" >
                                         {this.state.project.design}
                                     </Descriptions.Item>
-                                    <Descriptions.Item label="Completion Date" span="3">
-                                        {this.state.project.completionDate}
-                                    </Descriptions.Item>
                                     <Descriptions.Item label="Languages">
                                         {Array.isArray(project.languages) && project.languages.map(language => (
                                             <li key={language.id}>
@@ -75,6 +72,9 @@ class ProjectDetailsPage extends React.Component {
                                                 {technology.name}
                                             </li>
                                         ))}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Completion Date" span="3">
+                                        {this.state.project.completionDate}
                                     </Descriptions.Item>
                               </Descriptions>,
                             </div>

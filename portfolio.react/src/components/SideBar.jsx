@@ -9,7 +9,7 @@ class SideBar extends React.Component {
     render() {
         return (
             <>
-                <Sider style={{ color: "black", backgroundColor: "lightblue" }}>
+                <Sider style={{ color: "black", backgroundColor: "lightblue", borderStyle: "solid", borderWidth: "1px" }}>
                     <Auth0Provider
                         domain="dev-k1t7wt86.us.auth0.com"
                         clientId="pFxbAHPaBBetySztx58UeZ0ylWncZW2A"
